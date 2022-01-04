@@ -1,9 +1,10 @@
 import React from 'react';
-import { GameState, KeyboardButtonStates } from '../models';
+import { GameState, GuessLetter, KeyboardButtonStates } from '../models';
+import GuessList from './GuessList';
 import Keyboard from './Keyboard';
 
-const WORD_SIZE = 5;
-const GUESS_LIST_SIZE = 6;
+export const WORD_SIZE = 5;
+export const GUESS_LIST_SIZE = 6;
 
 class Game extends React.Component {
   state: GameState = {
@@ -17,14 +18,14 @@ class Game extends React.Component {
     return this.state.guesses[this.state.guesses.length - 1];
   }
 
-  updateLastGuess(newGuess: string[]) {
+  updateLastGuess(newGuess: GuessLetter[]) {
     this.setState({
       guesses: [...this.state.guesses.slice(0, this.state.guesses.length - 1), newGuess],
     });
   }
 
   handleKeyboardLetter(letter: string) {
-    this.updateLastGuess([...this.getLastGuess(), letter]);
+    this.updateLastGuess([...this.getLastGuess(), { letter, state: 'typing' }]);
   }
 
   handleKeyboardBack() {
@@ -57,14 +58,12 @@ class Game extends React.Component {
       enter: lastGuess.length === WORD_SIZE,
     }
 
-    const allGuesses = this.state.guesses
-      .map(guess => guess.join(''))
-      .map(guess => <div key={guess}>{guess}</div>)
-
     return (
-      <div className='container'>
-        <div>
-          {allGuesses}
+      <div className='container mt-3'>
+        <div className='mb-4'>
+          <GuessList
+            guesses={this.state.guesses}
+          />
         </div>
 
         <Keyboard

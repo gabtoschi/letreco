@@ -1,6 +1,5 @@
 import { KeyboardProps } from '../models';
 import KeyboardButton from './KeyboardButton';
-import { BsFillBackspaceFill } from 'react-icons/bs';
 
 const keyboardData: string[][] = [
   'QWERTYUIOP',

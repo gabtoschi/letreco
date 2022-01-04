@@ -1,5 +1,3 @@
-import { IconType } from "react-icons/lib";
-
 export interface KeyboardButtonStates {
   letters: boolean,
   back: boolean,
