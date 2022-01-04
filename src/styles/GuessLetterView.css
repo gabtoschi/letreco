@@ -3,3 +3,28 @@
   width: 9vw;
   height: 6vh;
 }
+
+.typing {
+  border: 3px solid black;
+  background-color: white;
+}
+
+.disabled {
+  border: 1px solid black;
+  background-color: white;
+}
+
+.wrong {
+  border: 1px solid black;
+  background-color: red;
+}
+
+.right {
+  border: 1px solid black;
+  background-color: green;
+}
+
+.displaced {
+  border: 1px solid black;
+  background-color: yellow;
+}

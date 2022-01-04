@@ -7,7 +7,11 @@ const completeList = (guesses: GuessLetter[][]) => {
   return [
     ...guesses, ...Array(GUESS_LIST_SIZE - guesses.length).fill([]),
   ].map(
-    guess => completeArray<GuessLetter>(guess, WORD_SIZE, {letter: '', state: 'typing'}),
+    (guess, index) => completeArray<GuessLetter>(
+      guess,
+      WORD_SIZE,
+      {letter: '', state: (index === guesses.length - 1 ? 'typing' : 'disabled')}
+    ),
   );
 }
 

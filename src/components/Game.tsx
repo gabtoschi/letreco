@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameState, GuessLetter, KeyboardButtonStates } from '../models';
+import { GameState, GuessLetter, GuessValidationResult, KeyboardButtonStates } from '../models';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
 
@@ -12,41 +12,89 @@ class Game extends React.Component {
       [],
     ],
     isGameEnded: false,
+    isGameWon: false,
+
+    dailyWord: 'BOTAS'.split(''),
   }
 
   getLastGuess() {
     return this.state.guesses[this.state.guesses.length - 1];
   }
 
-  updateLastGuess(newGuess: GuessLetter[]) {
-    this.setState({
-      guesses: [...this.state.guesses.slice(0, this.state.guesses.length - 1), newGuess],
-    });
+  updateLastGuess(newGuess: GuessLetter[]): GuessLetter[][] {
+    return [...this.state.guesses.slice(0, this.state.guesses.length - 1), newGuess];
+  }
+
+  validateLastGuess(): GuessValidationResult {
+    const lastGuess = this.getLastGuess();
+
+    const missingLetters = [];
+    const validatedGuess: GuessLetter[] = [];
+
+    let isRightGuess = false;
+
+    for (let i = 0; i < WORD_SIZE; i++) {
+      const letterState = lastGuess[i].letter === this.state.dailyWord[i] ? 'right' : 'wrong';
+
+      validatedGuess.push({
+        letter: lastGuess[i].letter,
+        state: letterState,
+      });
+
+      if (letterState === 'wrong') missingLetters.push(this.state.dailyWord[i]);
+    }
+
+    isRightGuess = missingLetters.length <= 0;
+
+    if (missingLetters.length) {
+      const wrongLetters = validatedGuess.filter(guess => guess.state === 'wrong');
+
+      for (let guessLetter of wrongLetters) {
+        const indexOnMissingLetters = missingLetters.indexOf(guessLetter.letter);
+
+        if (indexOnMissingLetters !== -1) {
+          guessLetter.state = 'displaced';
+          missingLetters.splice(indexOnMissingLetters, 1);
+        }
+      }
+    }
+
+    return {
+      validatedGuess, isRightGuess,
+    };
   }
 
   handleKeyboardLetter(letter: string) {
-    this.updateLastGuess([...this.getLastGuess(), { letter, state: 'typing' }]);
+    this.setState({
+      guesses: this.updateLastGuess([...this.getLastGuess(), { letter, state: 'typing' }]),
+    });
   }
 
   handleKeyboardBack() {
     const lastGuess = this.getLastGuess();
     const newGuess = lastGuess.slice(0, lastGuess.length - 1);
 
-    this.updateLastGuess(newGuess);
+    this.setState({
+      guesses: this.updateLastGuess(newGuess),
+    });
   }
 
   handleKeyboardEnter() {
-    if (this.state.guesses.length === GUESS_LIST_SIZE) {
+    const { validatedGuess, isRightGuess } = this.validateLastGuess();
+
+    this.updateLastGuess(validatedGuess);
+
+    if (this.state.guesses.length === GUESS_LIST_SIZE || isRightGuess) {
       this.setState({
         isGameEnded: true,
+        isGameWon: isRightGuess,
+        guesses: this.updateLastGuess(validatedGuess),
       });
-
-      return;
+    } else {
+      this.setState({
+        guesses: [...this.updateLastGuess(validatedGuess), []],
+      });
     }
-
-    this.setState({
-      guesses: [...this.state.guesses, []],
-    });
   }
 
   render() {
