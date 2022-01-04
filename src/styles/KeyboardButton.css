@@ -1,0 +1,13 @@
+.keyboard-button {
+  border: none;
+}
+
+.letter-button {
+  width: 8%;
+  height: 40px;
+}
+
+.action-button {
+  padding: 5px;
+  width: 20%;
+}

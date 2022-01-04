@@ -62,7 +62,7 @@ class Game extends React.Component {
       .map(guess => <div key={guess}>{guess}</div>)
 
     return (
-      <div>
+      <div className='container'>
         <div>
           {allGuesses}
         </div>

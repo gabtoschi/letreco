@@ -1,3 +1,5 @@
+import { IconType } from "react-icons/lib";
+
 export interface KeyboardButtonStates {
   letters: boolean,
   back: boolean,
@@ -11,4 +13,20 @@ export interface KeyboardProps {
 
   enabled: boolean;
   buttonStates: KeyboardButtonStates;
+}
+
+export type KeyboardButtonIcon = 'back' | 'enter';
+
+export interface KeyboardButtonProps {
+  elementKey: string;
+  onClick: () => void;
+
+  label?: string;
+  icon?: KeyboardButtonIcon;
+
+  enabled: boolean;
+  isLetter?: boolean;
+  isAction?: boolean;
+
+  extraClasses?: string;
 }

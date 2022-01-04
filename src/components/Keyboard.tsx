@@ -1,5 +1,6 @@
-import React from 'react';
 import { KeyboardProps } from '../models';
+import KeyboardButton from './KeyboardButton';
+import { BsFillBackspaceFill } from 'react-icons/bs';
 
 const keyboardData: string[][] = [
   'QWERTYUIOP',
@@ -10,36 +11,43 @@ const keyboardData: string[][] = [
 function Keyboard(props: KeyboardProps) {
   const buttonLines = keyboardData.map(letterLine => {
     const buttons = letterLine.map(letter => (
-      <button
+      <KeyboardButton
         key={letter}
+        elementKey={letter}
+        label={letter}
         onClick={() => props.onLetterPress(letter)}
-        disabled={!props.buttonStates.letters || !props.enabled}
-      >
-        {letter}
-      </button>
+        enabled={props.buttonStates.letters && props.enabled}
+        isLetter={true}
+      />
     ));
 
     return (
-      <div key={letterLine.join('')}>{buttons}</div>
+      <div
+        key={letterLine.join('')}
+        className='d-flex justify-content-around mb-2'
+      >{buttons}</div>
     );
   });
 
   return (
-    <div>
-      <div>
-        <button
-          onClick={() => props.onEnterPress()}
-          disabled={!props.buttonStates.enter || !props.enabled}
-        >
-          ENTER
-        </button>
+    <div className='px-lg-5'>
+      <div className='mb-3 d-flex justify-content-center'>
+          <KeyboardButton
+            elementKey='enter'
+            icon='enter'
+            onClick={() => props.onEnterPress()}
+            enabled={props.buttonStates.enter && props.enabled}
+            isAction={true}
+            extraClasses='me-3'
+          />
 
-        <button
+        <KeyboardButton
+          elementKey='back'
+          icon='back'
           onClick={() => props.onBackPress()}
-          disabled={!props.buttonStates.back || !props.enabled}
-        >
-          BACK
-        </button>
+          enabled={props.buttonStates.back && props.enabled}
+          isAction={true}
+        />
       </div>
       {buttonLines}
     </div>
