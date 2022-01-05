@@ -1,4 +1,4 @@
-import { DailyWord, DailyWordDatabase } from "../models";
+import { DailyWordDatabase } from "../models";
 
 export const dailyWords: DailyWordDatabase = {
 '2022-01-05': { edition: '001', date: '2022-01-05', word: 'BANIR' },
