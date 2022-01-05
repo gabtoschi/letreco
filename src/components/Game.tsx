@@ -1,5 +1,6 @@
 import React from 'react';
 import { GameState, GuessLetter, GuessValidationResult, KeyboardButtonStates } from '../models';
+import { wordList } from '../utils';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
 
@@ -14,7 +15,11 @@ class Game extends React.Component {
     isGameEnded: false,
     isGameWon: false,
 
-    dailyWord: 'BOTAS'.split(''),
+    dailyWord: {
+      edition: '001',
+      date: '2022-01-05',
+      word: 'PIZZA',
+    },
   }
 
   getLastGuess() {
@@ -25,8 +30,17 @@ class Game extends React.Component {
     return [...this.state.guesses.slice(0, this.state.guesses.length - 1), newGuess];
   }
 
+  isLastGuessInWordList(): boolean {
+    const lastGuessWord = this.getLastGuess()
+      .map(guess => guess.letter)
+      .join('');
+
+    return wordList.includes(lastGuessWord);
+  }
+
   validateLastGuess(): GuessValidationResult {
     const lastGuess = this.getLastGuess();
+    const dailyWordLetters = this.state.dailyWord.word.split('');
 
     const missingLetters = [];
     const validatedGuess: GuessLetter[] = [];
@@ -34,14 +48,14 @@ class Game extends React.Component {
     let isRightGuess = false;
 
     for (let i = 0; i < WORD_SIZE; i++) {
-      const letterState = lastGuess[i].letter === this.state.dailyWord[i] ? 'right' : 'wrong';
+      const letterState = lastGuess[i].letter === dailyWordLetters[i] ? 'right' : 'wrong';
 
       validatedGuess.push({
         letter: lastGuess[i].letter,
         state: letterState,
       });
 
-      if (letterState === 'wrong') missingLetters.push(this.state.dailyWord[i]);
+      if (letterState === 'wrong') missingLetters.push(dailyWordLetters[i]);
     }
 
     isRightGuess = missingLetters.length <= 0;
@@ -72,7 +86,9 @@ class Game extends React.Component {
 
   handleKeyboardBack() {
     const lastGuess = this.getLastGuess();
-    const newGuess = lastGuess.slice(0, lastGuess.length - 1);
+    const newGuess: GuessLetter[] = lastGuess
+      .slice(0, lastGuess.length - 1)
+      .map(oldGuess => ({ letter: oldGuess.letter, state: 'typing' }) as GuessLetter);
 
     this.setState({
       guesses: this.updateLastGuess(newGuess),
@@ -80,6 +96,17 @@ class Game extends React.Component {
   }
 
   handleKeyboardEnter() {
+    if (!this.isLastGuessInWordList()) {
+      const newGuess = this.getLastGuess()
+        .map(guess => ({ letter: guess.letter, state: 'wordlistError' }) as GuessLetter);
+
+      this.setState({
+        guesses: this.updateLastGuess(newGuess),
+      });
+
+      return;
+    }
+
     const { validatedGuess, isRightGuess } = this.validateLastGuess();
 
     this.updateLastGuess(validatedGuess);

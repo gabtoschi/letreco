@@ -28,3 +28,8 @@
   border: 1px solid black;
   background-color: yellow;
 }
+
+.wordlistError {
+  border: 3px solid red;
+  background-color: white;
+}
