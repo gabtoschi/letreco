@@ -17,6 +17,10 @@ export interface DailyWord {
   word: string;
 }
 
+export interface DailyWordDatabase {
+  [date: string]: DailyWord;
+}
+
 export interface GameState {
   dailyWord: DailyWord;
   guesses: GuessLetter[][];

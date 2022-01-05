@@ -1,6 +1,6 @@
 import React from 'react';
 import { GameState, GuessLetter, GuessValidationResult, KeyboardButtonStates } from '../models';
-import { wordList } from '../utils';
+import { dailyWords, wordList } from '../utils';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
 
@@ -15,11 +15,7 @@ class Game extends React.Component {
     isGameEnded: false,
     isGameWon: false,
 
-    dailyWord: {
-      edition: '001',
-      date: '2022-01-05',
-      word: 'PIZZA',
-    },
+    dailyWord: dailyWords[new Date().toISOString().split('T')[0]],
   }
 
   getLastGuess() {
