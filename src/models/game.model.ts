@@ -1,3 +1,5 @@
+import { KeyboardButtonStates } from ".";
+
 export type GuessLetterState =
   'typing' |
   'wrong' |
@@ -27,6 +29,8 @@ export interface GameState {
 
   isGameEnded: boolean;
   isGameWon: boolean;
+
+  keyboardButtonStates: KeyboardButtonStates;
 }
 
 export interface GuessValidationResult {

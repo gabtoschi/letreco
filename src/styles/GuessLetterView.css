@@ -2,34 +2,43 @@
   border: 2px solid black;
   width: 9vw;
   height: 6vh;
+
+  font-size: large;
+  font-weight: bolder;
 }
 
 .typing {
   border: 3px solid black;
   background-color: white;
+  color: black;
 }
 
 .disabled {
   border: 1px solid black;
   background-color: white;
+  color: black;
 }
 
 .wrong {
   border: 1px solid black;
   background-color: red;
+  color: white;
 }
 
 .right {
   border: 1px solid black;
   background-color: green;
+  color: white;
 }
 
 .displaced {
   border: 1px solid black;
   background-color: yellow;
+  color: black;
 }
 
 .wordlistError {
   border: 3px solid red;
   background-color: white;
+  color: black;
 }
