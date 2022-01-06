@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameState, GuessLetter, GuessValidationResult, KeyboardButtonStates } from '../models';
+import { GameState, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates } from '../models';
 import { dailyWords, wordList } from '../utils';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
@@ -11,7 +11,6 @@ export const KEY_BACKSPACE = 'Backspace';
 export const KEY_ENTER = 'Enter';
 export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 
-
 class Game extends React.Component {
   state: GameState = {
     guesses: [
@@ -22,11 +21,12 @@ class Game extends React.Component {
 
     dailyWord: dailyWords[new Date().toISOString().split('T')[0]],
 
+    keyboardLetterStates: {},
     keyboardButtonStates: {
       letters: true,
       back: false,
       enter: false,
-    }
+    },
   }
 
   handleKeyDownFunction = (event: KeyboardEvent) => this.handleKeyDown(event);
@@ -57,12 +57,23 @@ class Game extends React.Component {
     return wordList.includes(lastGuessWord);
   }
 
+  updateLetterState(states: KeyboardLetterStates, letter: string, newState: GuessLetterState) {
+    if (states[letter]) {
+      if (states[letter] === 'right') return;
+      if (states[letter] === 'displaced' && newState === 'wrong') return;
+    }
+
+    states[letter] = newState;
+  }
+
   validateLastGuess(): GuessValidationResult {
     const lastGuess = this.getLastGuess();
     const dailyWordLetters = this.state.dailyWord.word.split('');
 
     const missingLetters = [];
     const validatedGuess: GuessLetter[] = [];
+
+    const letterStates = { ...this.state.keyboardLetterStates } as KeyboardLetterStates;
 
     let isRightGuess = false;
 
@@ -92,8 +103,12 @@ class Game extends React.Component {
       }
     }
 
+    for (const guessLetter of validatedGuess) {
+      this.updateLetterState(letterStates, guessLetter.letter, guessLetter.state);
+    }
+
     return {
-      validatedGuess, isRightGuess,
+      validatedGuess, letterStates, isRightGuess,
     };
   }
 
@@ -135,7 +150,7 @@ class Game extends React.Component {
       return;
     }
 
-    const { validatedGuess, isRightGuess } = this.validateLastGuess();
+    const { validatedGuess, letterStates, isRightGuess } = this.validateLastGuess();
 
     if (this.state.guesses.length === GUESS_LIST_SIZE || isRightGuess) {
       const updatedGuesses = this.updateLastGuess(validatedGuess);
@@ -145,6 +160,7 @@ class Game extends React.Component {
         isGameWon: isRightGuess,
         guesses: updatedGuesses,
         keyboardButtonStates: this.updateKeyboardButtonStates(updatedGuesses),
+        keyboardLetterStates: letterStates,
       });
     } else {
       const updatedGuesses = [...this.updateLastGuess(validatedGuess), []];
@@ -152,6 +168,7 @@ class Game extends React.Component {
       this.setState({
         guesses: updatedGuesses,
         keyboardButtonStates: this.updateKeyboardButtonStates(updatedGuesses),
+        keyboardLetterStates: letterStates,
       });
     }
   }
@@ -197,6 +214,7 @@ class Game extends React.Component {
           onEnterPress={() => this.handleKeyboardEnter()}
 
           buttonStates={this.state.keyboardButtonStates}
+          letterStates={this.state.keyboardLetterStates}
           enabled={!this.state.isGameEnded}
         />
       </div>

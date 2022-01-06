@@ -1,4 +1,4 @@
-import { KeyboardButtonStates } from ".";
+import { KeyboardButtonStates, KeyboardLetterStates } from ".";
 
 export type GuessLetterState =
   'typing' |
@@ -31,9 +31,11 @@ export interface GameState {
   isGameWon: boolean;
 
   keyboardButtonStates: KeyboardButtonStates;
+  keyboardLetterStates: KeyboardLetterStates;
 }
 
 export interface GuessValidationResult {
   validatedGuess: GuessLetter[];
+  letterStates: KeyboardLetterStates;
   isRightGuess: boolean;
 }

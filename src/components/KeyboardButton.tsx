@@ -12,6 +12,7 @@ function KeyboardButton(props: KeyboardButtonProps) {
   if (props.extraClasses) className += ' ' + props.extraClasses;
   if (props.isLetter) className += ' letter-button';
   if (props.isAction) className += ' action-button';
+  if (props.stateClass) className += ' ' + props.stateClass;
 
   let content: JSX.Element = <span>{props.label}</span>;
   if (props.icon) content = mapIcon[props.icon]();

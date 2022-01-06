@@ -11,3 +11,18 @@
   padding: 5px;
   width: 20%;
 }
+
+.right {
+  background-color: green;
+  color: white;
+}
+
+.wrong {
+  background-color: red;
+  color: white;
+}
+
+.displaced {
+  background-color: yellow;
+  color: black;
+}

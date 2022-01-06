@@ -17,6 +17,7 @@ function Keyboard(props: KeyboardProps) {
         onClick={() => props.onLetterPress(letter)}
         enabled={props.buttonStates.letters && props.enabled}
         isLetter={true}
+        stateClass={props.letterStates[letter]}
       />
     ));
 

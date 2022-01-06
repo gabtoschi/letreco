@@ -1,7 +1,13 @@
+import { GuessLetterState } from ".";
+
 export interface KeyboardButtonStates {
   letters: boolean,
   back: boolean,
   enter: boolean,
+}
+
+export interface KeyboardLetterStates {
+  [letter: string]: GuessLetterState;
 }
 
 export interface KeyboardProps {
@@ -11,6 +17,7 @@ export interface KeyboardProps {
 
   enabled: boolean;
   buttonStates: KeyboardButtonStates;
+  letterStates: KeyboardLetterStates;
 }
 
 export type KeyboardButtonIcon = 'back' | 'enter';
@@ -26,5 +33,6 @@ export interface KeyboardButtonProps {
   isLetter?: boolean;
   isAction?: boolean;
 
+  stateClass?: string;
   extraClasses?: string;
 }
