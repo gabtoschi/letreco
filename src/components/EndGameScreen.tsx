@@ -37,24 +37,29 @@ class EndGameScreen extends React.Component<EndGameScreenProps, EndGameScreenSta
     return message;
   }
 
-  handleShareButton() {
-    const shareData = { text: this.state.message };
+  handleCopyButton() {
+    navigator.clipboard.writeText(this.state.message);
 
-    if (this.canShare()) {
-      navigator.share(shareData);
-    } else {
-      navigator.clipboard.writeText(this.state.message);
-      this.setState({
-        isResultCopied: true,
-      })
-    }
+    this.setState({
+      isResultCopied: true,
+    })
+  }
+
+  handleShareButton() {
+    navigator.share({ text: this.state.message });
   }
 
   render() {
-    let shareButtonText = 'COMPARTILHAR';
-    if (!this.canShare()) {
-      shareButtonText = this.state.isResultCopied ? 'COPIADO' : 'COPIAR RESULTADO';
-    }
+    const shareButton = this.canShare()
+      ? (
+        <button
+          className='mb-2'
+          onClick={() => this.handleShareButton()}
+        >
+          COMPARTILHAR
+        </button>
+      )
+      : '';
 
     return (
       <Overlay content={
@@ -64,11 +69,13 @@ class EndGameScreen extends React.Component<EndGameScreenProps, EndGameScreenSta
           <p className='text-center mb-3'>você usou <b>{this.props.guesses.length} de 6</b> tentativas</p>
 
           <div className="d-flex flex-column justify-content-center align-items-center">
+            {shareButton}
+
             <button
               className='mb-2'
-              onClick={() => this.handleShareButton()}
+              onClick={() => this.handleCopyButton()}
             >
-              {shareButtonText}
+              {this.state.isResultCopied ? 'COPIADO' : 'COPIAR RESULTADO'}
             </button>
 
             <button
