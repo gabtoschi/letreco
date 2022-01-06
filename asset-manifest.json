@@ -1,13 +1,11 @@
 {
   "files": {
-    "main.css": "/letreco/static/css/main.ead2d42d.css",
-    "main.js": "/letreco/static/js/main.9c5914c7.js",
-    "index.html": "/letreco/index.html",
-    "main.ead2d42d.css.map": "/letreco/static/css/main.ead2d42d.css.map",
-    "main.9c5914c7.js.map": "/letreco/static/js/main.9c5914c7.js.map"
+    "main.css": "/letreco/static/css/main.e2edea30.css",
+    "main.js": "/letreco/static/js/main.1c36d851.js",
+    "index.html": "/letreco/index.html"
   },
   "entrypoints": [
-    "static/css/main.ead2d42d.css",
-    "static/js/main.9c5914c7.js"
+    "static/css/main.e2edea30.css",
+    "static/js/main.1c36d851.js"
   ]
 }
