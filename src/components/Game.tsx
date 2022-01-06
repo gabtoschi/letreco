@@ -1,6 +1,7 @@
 import React from 'react';
 import { GameState, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates } from '../models';
 import { dailyWords, wordList } from '../utils';
+import EndGameScreen from './EndGameScreen';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
 
@@ -198,10 +199,20 @@ class Game extends React.Component {
   }
 
   render() {
+    const endGameScreen = this.state.isGameEnded
+      ? (<EndGameScreen
+          dailyWord={this.state.dailyWord}
+          guesses={this.state.guesses}
+          isGameWon={this.state.isGameWon}
+        />)
+      : (<div></div>);
+
     return (
       <div
         className='container mt-3'
       >
+        {endGameScreen}
+
         <div className='mb-4'>
           <GuessList
             guesses={this.state.guesses}

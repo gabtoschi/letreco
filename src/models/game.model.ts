@@ -39,3 +39,9 @@ export interface GuessValidationResult {
   letterStates: KeyboardLetterStates;
   isRightGuess: boolean;
 }
+
+export interface EndGameScreenProps {
+  dailyWord: DailyWord;
+  isGameWon: boolean;
+  guesses: GuessLetter[][];
+}
