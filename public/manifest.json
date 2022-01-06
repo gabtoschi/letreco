@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Letreco",
+  "name": "Letreco - o jogo diário de adivinhar palavras",
   "icons": [
     {
       "src": "favicon.ico",

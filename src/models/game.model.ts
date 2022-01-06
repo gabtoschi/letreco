@@ -45,3 +45,8 @@ export interface EndGameScreenProps {
   isGameWon: boolean;
   guesses: GuessLetter[][];
 }
+
+export interface EndGameScreenState {
+  isResultCopied: boolean;
+  message: string;
+}

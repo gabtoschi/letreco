@@ -12,7 +12,7 @@ export const KEY_BACKSPACE = 'Backspace';
 export const KEY_ENTER = 'Enter';
 export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 
-class Game extends React.Component {
+class Game extends React.Component<any, GameState> {
   state: GameState = {
     guesses: [
       [],
