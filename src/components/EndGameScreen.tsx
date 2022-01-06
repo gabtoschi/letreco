@@ -18,12 +18,15 @@ function EndGameScreen(props: EndGameScreenProps) {
       return guess.map(letter => EMOJI_MAP[letter.state]).join('') + '\n';
     }).join('');
 
-    message += '\njogue agora em gabtoschi.com/letreco'
+    message += '\njogue agora em gabtoschi.com/letreco';
 
-    if (navigator.canShare()) {
-      navigator.share({
-        text: message,
-      });
+    const shareData = { text: message };
+
+    if (navigator.canShare && navigator.canShare(shareData)) {
+      console.log('shared');
+      navigator.share(shareData);
+    } else {
+      console.log('not can share');
     }
   }
 
