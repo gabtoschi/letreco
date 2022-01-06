@@ -1,9 +1,10 @@
 import Game from "./Game";
 import Header from "./Header";
+import '../styles/App.css';
 
 function App() {
   return (
-    <div>
+    <div className="app-container">
       <Header />
       <Game />
     </div>

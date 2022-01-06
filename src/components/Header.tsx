@@ -36,7 +36,7 @@ class Header extends React.Component<any, HeaderState> {
       ) : '';
 
     return (
-      <div className="mt-3 mb-4 d-flex align-items-center justify-content-around container">
+      <div className="mt-3 mb-4 d-flex align-items-center justify-content-around">
         {howToPlayScreen}
 
         <button

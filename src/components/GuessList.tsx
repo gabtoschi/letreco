@@ -21,13 +21,14 @@ function GuessList(props: GuessListProps) {
       return (
         <div
           key={guessIndex}
-          className="d-flex justify-content-evenly mb-3"
+          className="d-flex justify-content-center mb-3"
         >
           {guess.map((letter, letterIndex) => (
             <GuessLetterView
               key={guessIndex + '-' + letterIndex}
               letter={letter.letter}
               state={letter.state}
+              marginRight={letterIndex !== guess.length - 1}
             />
           ))}
         </div>

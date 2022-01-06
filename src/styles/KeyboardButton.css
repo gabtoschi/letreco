@@ -1,5 +1,5 @@
 .keyboard-button {
-  border: none;
+  border: solid 1px black;
 }
 
 .letter-button {

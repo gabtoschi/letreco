@@ -5,4 +5,5 @@ export interface GuessListProps {
 }
 
 export interface GuessLetterViewProps extends GuessLetter {
+  marginRight?: boolean;
 }

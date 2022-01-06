@@ -30,7 +30,7 @@ function Keyboard(props: KeyboardProps) {
   });
 
   return (
-    <div className='px-lg-5'>
+    <div className='px-lg-5 px-2'>
       <div className='mb-3 d-flex justify-content-center'>
           <KeyboardButton
             elementKey='enter'

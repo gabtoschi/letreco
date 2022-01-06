@@ -218,7 +218,7 @@ class Game extends React.Component<any, GameState> {
 
     return (
       <div
-        className='container mt-3'
+        className='mt-3'
       >
         {endGameScreen}
 
