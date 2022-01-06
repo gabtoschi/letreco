@@ -32,20 +32,20 @@ function Keyboard(props: KeyboardProps) {
   return (
     <div className='px-lg-5 px-2'>
       <div className='mb-3 d-flex justify-content-center'>
-          <KeyboardButton
-            elementKey='enter'
-            icon='enter'
-            onClick={() => props.onEnterPress()}
-            enabled={props.buttonStates.enter && props.enabled}
-            isAction={true}
-            extraClasses='me-3'
-          />
-
         <KeyboardButton
           elementKey='back'
           icon='back'
           onClick={() => props.onBackPress()}
           enabled={props.buttonStates.back && props.enabled}
+          isAction={true}
+          extraClasses='me-3'
+        />
+
+        <KeyboardButton
+          elementKey='enter'
+          icon='enter'
+          onClick={() => props.onEnterPress()}
+          enabled={props.buttonStates.enter && props.enabled}
           isAction={true}
         />
       </div>
