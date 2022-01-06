@@ -12,6 +12,7 @@ function HowToPlayScreen(props: HowToPlayScreenProps) {
         <p className="text-center">
           Todos os dias, uma nova palavra aparecerá no Letreco para você adivinhar.<br/>
           Você terá 6 tentativas. Cada uma delas deve ser uma palavra que exista.<br/>
+          Acentos e cedilha são ignorados, tanto nas tentativas, quanto na resposta.<br/>
           Após enviar uma tentativa, a cor das letras mudará para indicar o quão perto você está da resposta.<br/>
           Ao fim do jogo, você pode compartilhar/copiar o seu resultado.
         </p>
