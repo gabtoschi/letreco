@@ -1,6 +1,6 @@
 import React from 'react';
 import { EndGameScreenProps, EndGameScreenState } from '../models';
-import '../styles/EndGameScreen.css';
+import Overlay from './Overlay';
 
 const EMOJI_MAP = {
   'right': '🟩',
@@ -57,8 +57,8 @@ class EndGameScreen extends React.Component<EndGameScreenProps, EndGameScreenSta
     }
 
     return (
-      <div className="overlay-screen d-flex justify-content-center align-items-center">
-        <div className='overlay rounded p-3'>
+      <Overlay content={
+        <div>
           <h1 className='text-center mb-3'>Você {this.props.isGameWon ? 'acertou!' : 'não conseguiu...'}</h1>
           <p className='text-center mb-1'>o Letreco do dia era: <b>{this.props.dailyWord.word}</b></p>
           <p className='text-center mb-3'>você usou <b>{this.props.guesses.length} de 6</b> tentativas</p>
@@ -70,10 +70,14 @@ class EndGameScreen extends React.Component<EndGameScreenProps, EndGameScreenSta
             >
               {shareButtonText}
             </button>
-            <button>VOLTAR</button>
+
+            <button
+              onClick={() => this.props.handleCloseScreen()}
+            >FECHAR</button>
           </div>
         </div>
-      </div>
+      }/>
+
     );
   }
 }

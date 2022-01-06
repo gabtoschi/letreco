@@ -19,6 +19,7 @@ class Game extends React.Component<any, GameState> {
     ],
     isGameEnded: false,
     isGameWon: false,
+    isEndGameScreenOpen: false,
 
     dailyWord: dailyWords[new Date().toISOString().split('T')[0]],
 
@@ -159,6 +160,7 @@ class Game extends React.Component<any, GameState> {
       this.setState({
         isGameEnded: true,
         isGameWon: isRightGuess,
+        isEndGameScreenOpen: true,
         guesses: updatedGuesses,
         keyboardButtonStates: this.updateKeyboardButtonStates(updatedGuesses),
         keyboardLetterStates: letterStates,
@@ -190,6 +192,12 @@ class Game extends React.Component<any, GameState> {
     }
   }
 
+  handleEndGameScreenClose() {
+    this.setState({
+      isEndGameScreenOpen: false,
+    });
+  }
+
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDownFunction);
   }
@@ -199,11 +207,12 @@ class Game extends React.Component<any, GameState> {
   }
 
   render() {
-    const endGameScreen = this.state.isGameEnded
+    const endGameScreen = this.state.isEndGameScreenOpen
       ? (<EndGameScreen
           dailyWord={this.state.dailyWord}
           guesses={this.state.guesses}
           isGameWon={this.state.isGameWon}
+          handleCloseScreen={() => this.handleEndGameScreenClose()}
         />)
       : (<div></div>);
 

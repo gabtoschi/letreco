@@ -29,6 +29,7 @@ export interface GameState {
 
   isGameEnded: boolean;
   isGameWon: boolean;
+  isEndGameScreenOpen: boolean;
 
   keyboardButtonStates: KeyboardButtonStates;
   keyboardLetterStates: KeyboardLetterStates;
@@ -44,6 +45,7 @@ export interface EndGameScreenProps {
   dailyWord: DailyWord;
   isGameWon: boolean;
   guesses: GuessLetter[][];
+  handleCloseScreen: () => void;
 }
 
 export interface EndGameScreenState {
