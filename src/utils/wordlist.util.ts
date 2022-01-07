@@ -1,4 +1,5 @@
 export const wordList: string[] = [
+ 'AMORA',
  'AAIUN',
  'AARAO',
  'ABABA',
