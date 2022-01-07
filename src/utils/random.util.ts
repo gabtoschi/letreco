@@ -10,7 +10,7 @@ export function shuffleArray(array: Array<any>): Array<any> {
   let currentIndex = shuffled.length
   let randomIndex;
 
-  while (currentIndex != 0) {
+  while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
