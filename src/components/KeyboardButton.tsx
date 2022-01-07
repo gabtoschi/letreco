@@ -1,10 +1,10 @@
-import { BsArrowReturnLeft, BsFillBackspaceFill } from "react-icons/bs";
+import { BsCheckLg, BsFillBackspaceFill } from "react-icons/bs";
 import { KeyboardButtonProps } from "../models";
 import '../styles/KeyboardButton.css';
 
 const mapIcon: { [icon: string]: () => JSX.Element } = {
   'back': () => (<BsFillBackspaceFill />),
-  'enter': () => (<BsArrowReturnLeft />),
+  'enter': () => (<BsCheckLg />),
 };
 
 function KeyboardButton(props: KeyboardButtonProps) {

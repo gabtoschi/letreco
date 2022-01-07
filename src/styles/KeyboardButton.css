@@ -1,5 +1,6 @@
 .keyboard-button {
-  border: solid 1px black;
+  border: solid 1px #252525;
+  font-size: 16px;
 }
 
 .letter-button {
@@ -13,16 +14,16 @@
 }
 
 .right {
-  background-color: green;
-  color: white;
+  background-color: #51b36e;
+  color: #f4f3f1;
 }
 
 .wrong {
-  background-color: red;
-  color: white;
+  background-color: #943e3c;
+  color: #f4f3f1;
 }
 
 .displaced {
-  background-color: yellow;
-  color: black;
+  background-color: #c79c2e;
+  color: #f4f3f1;
 }

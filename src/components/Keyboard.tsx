@@ -9,7 +9,7 @@ const keyboardData: string[][] = [
 
 function Keyboard(props: KeyboardProps) {
   const buttonLines = keyboardData.map(letterLine => {
-    const buttons = letterLine.map(letter => (
+    const buttons = letterLine.map((letter, index) => (
       <KeyboardButton
         key={letter}
         elementKey={letter}
@@ -18,13 +18,14 @@ function Keyboard(props: KeyboardProps) {
         enabled={props.buttonStates.letters && props.enabled}
         isLetter={true}
         stateClass={props.letterStates[letter]}
+        extraClasses={index !== letterLine.length - 1 ? 'me-2' : ''}
       />
     ));
 
     return (
       <div
         key={letterLine.join('')}
-        className='d-flex justify-content-around mb-2'
+        className='d-flex justify-content-center mb-2'
       >{buttons}</div>
     );
   });

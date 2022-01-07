@@ -1,6 +1,23 @@
 .header-button {
-  background-color: white;
-  border: none;
+  background-color: #f4f3f1;
+  border: solid 1px #252525;
 
   font-size: 150%;
+}
+
+.app-name {
+  font-family: 'Acme', sans-serif;
+  font-size: 270%;
+}
+
+.letter-green {
+  color: #51b36e;
+}
+
+.letter-red {
+  color: #943e3c;
+}
+
+.letter-yellow {
+  color: #c79c2e;
 }
