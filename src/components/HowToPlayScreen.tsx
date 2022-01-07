@@ -53,9 +53,9 @@ function HowToPlayScreen(props: HowToPlayScreenProps) {
         </div>
 
         <p className="text-center credits">
-          criado por <a href="https://gabtoschi.com" target="_blank">Gabriel Toschi</a><br/>
-          versão brasileira não-oficial do <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank">Wordle</a><br/>
-          powered by <a href="https://pt-br.reactjs.org/" target="_blank">React</a>, <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>, <a href="https://pages.github.com/" target="_blank">GitHub Pages</a><br/>
+          criado por <a href="https://gabtoschi.com" target="_blank" rel="noreferrer">Gabriel Toschi</a>, banco de palavras por <a href="https://pt-br.libreoffice.org/projetos/vero" target="_blank" rel="noreferrer">VERO</a><br/>
+          versão brasileira não-oficial do <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank" rel="noreferrer">Wordle</a><br/>
+          powered by <a href="https://pt-br.reactjs.org/" target="_blank" rel="noreferrer">React</a>, <a href="https://getbootstrap.com/" target="_blank" rel="noreferrer">Bootstrap</a>, <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a><br/>
         </p>
 
         <div className="d-flex align-items-center justify-content-center">
