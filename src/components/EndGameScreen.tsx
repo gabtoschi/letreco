@@ -1,5 +1,6 @@
 import React from 'react';
 import { EndGameScreenProps, EndGameScreenState } from '../models';
+import Button from './Button';
 import Overlay from './Overlay';
 
 const EMOJI_MAP = {
@@ -52,12 +53,11 @@ class EndGameScreen extends React.Component<EndGameScreenProps, EndGameScreenSta
   render() {
     const shareButton = this.canShare()
       ? (
-        <button
+        <Button
           className='mb-2'
           onClick={() => this.handleShareButton()}
-        >
-          COMPARTILHAR
-        </button>
+          label='COMPARTILHAR'
+        />
       )
       : '';
 
@@ -71,16 +71,16 @@ class EndGameScreen extends React.Component<EndGameScreenProps, EndGameScreenSta
           <div className="d-flex flex-column justify-content-center align-items-center">
             {shareButton}
 
-            <button
+            <Button
               className='mb-2'
               onClick={() => this.handleCopyButton()}
-            >
-              {this.state.isResultCopied ? 'COPIADO' : 'COPIAR RESULTADO'}
-            </button>
+              label={this.state.isResultCopied ? 'COPIADO' : 'COPIAR RESULTADO'}
+            />
 
-            <button
+            <Button
               onClick={() => this.props.handleCloseScreen()}
-            >FECHAR</button>
+              label='FECHAR'
+            />
           </div>
         </div>
       }/>

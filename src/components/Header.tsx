@@ -44,7 +44,7 @@ class Header extends React.Component<any, HeaderState> {
       if (index === shuffledIndexes[1]) className = 'letter-yellow';
       if (index === shuffledIndexes[2]) className = 'letter-red';
 
-      return (<span id={index.toString()} className={className}>{letter}</span>)
+      return (<span key={index.toString()} className={className}>{letter}</span>)
     });
 
     return (

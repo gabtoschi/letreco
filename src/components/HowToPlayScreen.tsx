@@ -2,6 +2,7 @@ import { HowToPlayScreenProps } from "../models/header.model";
 import GuessLetterView from "./GuessLetterView";
 import Overlay from "./Overlay";
 import '../styles/HowToPlayScreen.css';
+import Button from "./Button";
 
 function HowToPlayScreen(props: HowToPlayScreenProps) {
   return (
@@ -54,16 +55,15 @@ function HowToPlayScreen(props: HowToPlayScreenProps) {
 
         <p className="text-center credits">
           criado por <a href="https://gabtoschi.com" target="_blank">Gabriel Toschi</a><br/>
-          versão não-oficial do <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank">Wordle</a><br/>
+          versão brasileira não-oficial do <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank">Wordle</a><br/>
           powered by <a href="https://pt-br.reactjs.org/" target="_blank">React</a>, <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>, <a href="https://pages.github.com/" target="_blank">GitHub Pages</a><br/>
         </p>
 
         <div className="d-flex align-items-center justify-content-center">
-          <button
+          <Button
             onClick={props.handleCloseScreen}
-          >
-            FECHAR
-          </button>
+            label='FECHAR'
+          />
         </div>
 
       </div>
