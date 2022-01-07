@@ -28,7 +28,7 @@ class EndGameScreen extends React.Component<EndGameScreenProps, EndGameScreenSta
   }
 
   createMessage(): string {
-    let message = `@MeuLetreco ${this.props.dailyWord.edition} (${this.props.guesses.length}/6)\n\n`;
+    let message = `nº ${this.props.dailyWord.edition} @MeuLetreco (${this.props.guesses.length}/6)\n\n`;
 
     message += this.props.guesses.map(guess => {
       return guess.map(letter => EMOJI_MAP[letter.state]).join('') + '\n';
