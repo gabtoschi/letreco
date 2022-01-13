@@ -1,4 +1,4 @@
-import { KeyboardButtonStates, KeyboardLetterStates } from ".";
+import { KeyboardLetterStates } from ".";
 
 export type GuessLetterState =
   'typing' |
@@ -23,16 +23,9 @@ export interface DailyWordDatabase {
   [date: string]: DailyWord;
 }
 
-export interface GameState {
-  dailyWord: DailyWord;
-  guesses: GuessLetter[][];
-
+export interface GameWinState {
   isGameEnded: boolean;
   isGameWon: boolean;
-  isEndGameScreenOpen: boolean;
-
-  keyboardButtonStates: KeyboardButtonStates;
-  keyboardLetterStates: KeyboardLetterStates;
 }
 
 export interface GuessValidationResult {
@@ -46,9 +39,4 @@ export interface EndGameScreenProps {
   isGameWon: boolean;
   guesses: GuessLetter[][];
   handleCloseScreen: () => void;
-}
-
-export interface EndGameScreenState {
-  isResultCopied: boolean;
-  message: string;
 }

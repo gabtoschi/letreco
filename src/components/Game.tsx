@@ -1,5 +1,5 @@
-import React from 'react';
-import { GameState, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates } from '../models';
+import { useEffect, useMemo, useState } from 'react';
+import { DailyWord, GameWinState, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates } from '../models';
 import { getDailyWord, wordList } from '../utils';
 import EndGameScreen from './EndGameScreen';
 import GuessList from './GuessList';
@@ -12,37 +12,31 @@ export const KEY_BACKSPACE = 'Backspace';
 export const KEY_ENTER = 'Enter';
 export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 
-class Game extends React.Component<any, GameState> {
-  state: GameState = {
-    guesses: [
-      [],
-    ],
-    isGameEnded: false,
-    isGameWon: false,
-    isEndGameScreenOpen: false,
+function Game() {
+  const [guesses, setGuesses] = useState<GuessLetter[][]>([[]]);
 
-    dailyWord: getDailyWord(),
+  const [winState, setWinState] = useState<GameWinState>({
+    isGameEnded: false, isGameWon: false,
+  });
+  const [buttonStates, setButtonStates] = useState<KeyboardButtonStates>({
+    letters: true, back: false, enter: false,
+  });
+  const [letterStates, setLetterStates] = useState<KeyboardLetterStates>({});
 
-    keyboardLetterStates: {},
-    keyboardButtonStates: {
-      letters: true,
-      back: false,
-      enter: false,
-    },
+  const [isEndGameScreenOpen, setIsEndGameScreenOpen] = useState<boolean>(false);
+
+  const dailyWord = useMemo<DailyWord>(() => getDailyWord(), []);
+
+  const getLastGuess = (guessesArray: GuessLetter[][] = guesses) => {
+    return guessesArray[guessesArray.length - 1];
   }
 
-  handleKeyDownFunction = (event: KeyboardEvent) => this.handleKeyDown(event);
-
-  getLastGuess(guesses = this.state.guesses) {
-    return guesses[guesses.length - 1];
+  const updateLastGuess = (newGuess: GuessLetter[]): GuessLetter[][] => {
+    return [...guesses.slice(0, guesses.length - 1), newGuess];
   }
 
-  updateLastGuess(newGuess: GuessLetter[]): GuessLetter[][] {
-    return [...this.state.guesses.slice(0, this.state.guesses.length - 1), newGuess];
-  }
-
-  updateKeyboardButtonStates(guesses: GuessLetter[][]): KeyboardButtonStates {
-    const lastGuess = this.getLastGuess(guesses);
+  const updateKeyboardButtonStates = (guesses: GuessLetter[][]): KeyboardButtonStates => {
+    const lastGuess = getLastGuess(guesses);
 
     return {
       letters: lastGuess.length < WORD_SIZE,
@@ -51,15 +45,15 @@ class Game extends React.Component<any, GameState> {
     }
   }
 
-  isLastGuessInWordList(): boolean {
-    const lastGuessWord = this.getLastGuess()
+  const isLastGuessInWordList = (): boolean => {
+    const lastGuessWord = getLastGuess()
       .map(guess => guess.letter)
       .join('');
 
     return wordList.includes(lastGuessWord);
   }
 
-  updateLetterState(states: KeyboardLetterStates, letter: string, newState: GuessLetterState) {
+  const updateLetterState = (states: KeyboardLetterStates, letter: string, newState: GuessLetterState) => {
     if (states[letter]) {
       if (states[letter] === 'right') return;
       if (states[letter] === 'displaced' && newState === 'wrong') return;
@@ -68,14 +62,14 @@ class Game extends React.Component<any, GameState> {
     states[letter] = newState;
   }
 
-  validateLastGuess(): GuessValidationResult {
-    const lastGuess = this.getLastGuess();
-    const dailyWordLetters = this.state.dailyWord.word.split('');
+  const validateLastGuess = (): GuessValidationResult => {
+    const lastGuess = getLastGuess();
+    const dailyWordLetters = dailyWord.word.split('');
 
     const missingLetters = [];
     const validatedGuess: GuessLetter[] = [];
 
-    const letterStates = { ...this.state.keyboardLetterStates } as KeyboardLetterStates;
+    const newLetterStates = { ...letterStates } as KeyboardLetterStates;
 
     let isRightGuess = false;
 
@@ -106,140 +100,120 @@ class Game extends React.Component<any, GameState> {
     }
 
     for (const guessLetter of validatedGuess) {
-      this.updateLetterState(letterStates, guessLetter.letter, guessLetter.state);
+      updateLetterState(newLetterStates, guessLetter.letter, guessLetter.state);
     }
 
     return {
-      validatedGuess, letterStates, isRightGuess,
+      validatedGuess, letterStates: newLetterStates, isRightGuess,
     };
   }
 
-  handleKeyboardLetter(letter: string) {
-    const updatedGuesses = this.updateLastGuess([...this.getLastGuess(), { letter, state: 'typing' }]);
+  const handleKeyboardLetter = (letter: string) => {
+    const updatedGuesses = updateLastGuess([...getLastGuess(), { letter, state: 'typing' }]);
 
-    this.setState({
-      guesses: updatedGuesses,
-      keyboardButtonStates: this.updateKeyboardButtonStates(updatedGuesses),
-    });
+    setGuesses(updatedGuesses);
+    setButtonStates(updateKeyboardButtonStates(updatedGuesses));
   }
 
-  handleKeyboardBack() {
-    const lastGuess = this.getLastGuess();
+  const handleKeyboardBack = () => {
+    const lastGuess = getLastGuess();
     const newGuess: GuessLetter[] = lastGuess
       .slice(0, lastGuess.length - 1)
       .map(oldGuess => ({ letter: oldGuess.letter, state: 'typing' }) as GuessLetter);
 
-    const updatedGuesses = this.updateLastGuess(newGuess);
+    const updatedGuesses = updateLastGuess(newGuess);
 
-    this.setState({
-      guesses: updatedGuesses,
-      keyboardButtonStates: this.updateKeyboardButtonStates(updatedGuesses),
-    });
+    setGuesses(updatedGuesses);
+    setButtonStates(updateKeyboardButtonStates(updatedGuesses));
   }
 
-  handleKeyboardEnter() {
-    if (!this.isLastGuessInWordList()) {
-      const newGuess = this.getLastGuess()
+  const handleKeyboardEnter = () => {
+    if (!isLastGuessInWordList()) {
+      const newGuess = getLastGuess()
         .map(guess => ({ letter: guess.letter, state: 'wordlistError' }) as GuessLetter);
 
-      const updatedGuesses = this.updateLastGuess(newGuess);
+      const updatedGuesses = updateLastGuess(newGuess);
 
-      this.setState({
-        guesses: updatedGuesses,
-        keyboardButtonStates: this.updateKeyboardButtonStates(updatedGuesses),
-      });
+      setGuesses(updatedGuesses);
+      setButtonStates(updateKeyboardButtonStates(updatedGuesses));
 
       return;
     }
 
-    const { validatedGuess, letterStates, isRightGuess } = this.validateLastGuess();
+    const { validatedGuess, letterStates: newLetterStates, isRightGuess } = validateLastGuess();
 
-    if (this.state.guesses.length === GUESS_LIST_SIZE || isRightGuess) {
-      const updatedGuesses = this.updateLastGuess(validatedGuess);
+    if (guesses.length === GUESS_LIST_SIZE || isRightGuess) {
+      const updatedGuesses = updateLastGuess(validatedGuess);
 
-      this.setState({
-        isGameEnded: true,
-        isGameWon: isRightGuess,
-        isEndGameScreenOpen: true,
-        guesses: updatedGuesses,
-        keyboardButtonStates: this.updateKeyboardButtonStates(updatedGuesses),
-        keyboardLetterStates: letterStates,
-      });
+      setWinState({ isGameEnded: true, isGameWon: isRightGuess });
+      setIsEndGameScreenOpen(true);
+      setGuesses(updatedGuesses);
+      setButtonStates(updateKeyboardButtonStates(updatedGuesses));
+      setLetterStates(newLetterStates);
+
     } else {
-      const updatedGuesses = [...this.updateLastGuess(validatedGuess), []];
+      const updatedGuesses = [...updateLastGuess(validatedGuess), []];
 
-      this.setState({
-        guesses: updatedGuesses,
-        keyboardButtonStates: this.updateKeyboardButtonStates(updatedGuesses),
-        keyboardLetterStates: letterStates,
-      });
+      setGuesses(updatedGuesses);
+      setButtonStates(updateKeyboardButtonStates(updatedGuesses));
+      setLetterStates(newLetterStates);
     }
   }
 
-  handleKeyDown(event: KeyboardEvent) {
-    if (event.key === KEY_BACKSPACE && this.state.keyboardButtonStates.back) {
-      this.handleKeyboardBack();
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === KEY_BACKSPACE && buttonStates.back) {
+      handleKeyboardBack();
       return;
     }
 
-    if (event.key === KEY_ENTER && this.state.keyboardButtonStates.enter) {
-      this.handleKeyboardEnter();
+    if (event.key === KEY_ENTER && buttonStates.enter) {
+      handleKeyboardEnter();
       return;
     }
 
-    if (KEY_LETTERS.includes(event.key) && this.state.keyboardButtonStates.letters) {
-      this.handleKeyboardLetter(event.key.toUpperCase());
+    if (KEY_LETTERS.includes(event.key) && buttonStates.letters) {
+      handleKeyboardLetter(event.key.toUpperCase());
     }
   }
 
-  handleEndGameScreenClose() {
-    this.setState({
-      isEndGameScreenOpen: false,
-    });
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  });
+
+  const handleEndGameScreenClose = () => {
+    setIsEndGameScreenOpen(false);
   }
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyDownFunction);
-  }
+  return (
+    <div
+      className='mt-3'
+    >
+      {isEndGameScreenOpen && <EndGameScreen
+        dailyWord={dailyWord}
+        guesses={guesses}
+        isGameWon={winState.isGameWon}
+        handleCloseScreen={handleEndGameScreenClose}
+      />}
 
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDownFunction);
-  }
-
-  render() {
-    const endGameScreen = this.state.isEndGameScreenOpen
-      ? (<EndGameScreen
-          dailyWord={this.state.dailyWord}
-          guesses={this.state.guesses}
-          isGameWon={this.state.isGameWon}
-          handleCloseScreen={() => this.handleEndGameScreenClose()}
-        />)
-      : (<div></div>);
-
-    return (
-      <div
-        className='mt-3'
-      >
-        {endGameScreen}
-
-        <div className='mb-4'>
-          <GuessList
-            guesses={this.state.guesses}
-          />
-        </div>
-
-        <Keyboard
-          onLetterPress={(letter: string) => this.handleKeyboardLetter(letter)}
-          onBackPress={() => this.handleKeyboardBack()}
-          onEnterPress={() => this.handleKeyboardEnter()}
-
-          buttonStates={this.state.keyboardButtonStates}
-          letterStates={this.state.keyboardLetterStates}
-          enabled={!this.state.isGameEnded}
+      <div className='mb-4'>
+        <GuessList
+          guesses={guesses}
         />
       </div>
-    )
-  }
+
+      <Keyboard
+        onLetterPress={handleKeyboardLetter}
+        onBackPress={handleKeyboardBack}
+        onEnterPress={handleKeyboardEnter}
+
+        buttonStates={buttonStates}
+        letterStates={letterStates}
+        enabled={!winState.isGameEnded}
+      />
+    </div>
+  )
 }
 
 export default Game;
