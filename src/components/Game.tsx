@@ -1,8 +1,9 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { GuessDistributionKeys, StatisticsContext } from '../hooks/useStatistics';
+import { GuessDistributionKeys, Statistics, StatisticsContext } from '../hooks/useStatistics';
+import { SavedTrophiesContext } from '../hooks/useTrophies';
 import { DailyWord, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates, SavedDailyGame } from '../models';
-import { getDailyWord, getLast, getToday, wordList } from '../utils';
+import { getDailyWord, getLast, getToday, unlockNewTrophies, wordList } from '../utils';
 import EndGameScreen from './EndGameScreen';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
@@ -36,6 +37,7 @@ const updateKeyboardButtonStates = (guesses: GuessLetter[][]): KeyboardButtonSta
 
 function Game() {
   const [statistics, setStatistics] = useContext(StatisticsContext);
+  const [{unlockedTrophies}, setNewTrophies] = useContext(SavedTrophiesContext);
 
   const [{
     date: savedDate, guesses, winState, letterStates,
@@ -53,20 +55,19 @@ function Game() {
     updateKeyboardButtonStates(guesses)
   );
 
-  const updateStatistics = (isGameWon: boolean, guessesAmount: number) => {
+  const getNewStatistics = (isGameWon: boolean, guessesAmount: number): Statistics => {
     const newStreak = isGameWon ? statistics.currentStreak + 1 : 0;
-    console.log(newStreak);
 
     const guessResult = (isGameWon ? guessesAmount.toString() : 'X') as GuessDistributionKeys;
 
     const newDistribution = { ...statistics.distribution };
     newDistribution[guessResult] += 1;
 
-    setStatistics({
+    return {
       distribution: newDistribution,
       currentStreak: newStreak,
       maxStreak: newStreak > statistics.maxStreak ? newStreak : statistics.maxStreak,
-    });
+    };
   }
 
   const updateLastGuess = (newGuess: GuessLetter[]): GuessLetter[][] => {
@@ -178,6 +179,12 @@ function Game() {
 
     if (guesses.length === GUESS_LIST_SIZE || isRightGuess) {
       const updatedGuesses = updateLastGuess(validatedGuess);
+      const newStatistics = getNewStatistics(isRightGuess, updatedGuesses.length);
+      const newTrophies = unlockNewTrophies(
+        unlockedTrophies,
+        { isGameWon: isRightGuess, guesses: updatedGuesses, statistics: newStatistics },
+        dailyWord,
+      )
 
       setSavedGame({
         guesses: updatedGuesses,
@@ -193,7 +200,9 @@ function Game() {
           winState: { isGameEnded: true, isGameWon: isRightGuess }
         });
 
-        updateStatistics(isRightGuess, updatedGuesses.length);
+        setStatistics(newStatistics);
+        setNewTrophies(newTrophies);
+
         setIsEndGameScreenOpen(true);
       }, GAME_END_DELAY);
 
