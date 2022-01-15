@@ -12,6 +12,8 @@ export const KEY_BACKSPACE = 'Backspace';
 export const KEY_ENTER = 'Enter';
 export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 
+export const GAME_END_DELAY = 0.8 * 1000;
+
 function Game() {
   const [guesses, setGuesses] = useState<GuessLetter[][]>([[]]);
 
@@ -108,6 +110,7 @@ function Game() {
     };
   }
 
+
   const handleKeyboardLetter = (letter: string) => {
     const updatedGuesses = updateLastGuess([...getLastGuess(), { letter, state: 'typing' }]);
 
@@ -145,11 +148,14 @@ function Game() {
     if (guesses.length === GUESS_LIST_SIZE || isRightGuess) {
       const updatedGuesses = updateLastGuess(validatedGuess);
 
-      setWinState({ isGameEnded: true, isGameWon: isRightGuess });
-      setIsEndGameScreenOpen(true);
       setGuesses(updatedGuesses);
       setButtonStates(updateKeyboardButtonStates(updatedGuesses));
       setLetterStates(newLetterStates);
+
+      setTimeout(() => {
+        setWinState({ isGameEnded: true, isGameWon: isRightGuess });
+        setIsEndGameScreenOpen(true);
+      }, GAME_END_DELAY);
 
     } else {
       const updatedGuesses = [...updateLastGuess(validatedGuess), []];
