@@ -19,7 +19,7 @@
 }
 
 .right.colorblind {
-  background-color: #648FFF;
+  background-color: #2271B2;
 }
 
 .right:disabled {
@@ -27,7 +27,7 @@
 }
 
 .right.colorblind:disabled {
-  background-color: rgba(100, 143, 255, 0.65);
+  background-color: rgba(34, 113, 178, 0.65);
 }
 
 .wrong {
@@ -36,7 +36,7 @@
 }
 
 .wrong.colorblind {
-  background-color: #DC267F;
+  background-color: #1d1d1d;
 }
 
 .wrong:disabled {
@@ -44,7 +44,7 @@
 }
 
 .wrong.colorblind:disabled {
-  background-color: rgba(220, 38, 127, 0.65);
+  background-color: rgba(29, 29, 29, 0.65);
 }
 
 .displaced {
@@ -53,7 +53,7 @@
 }
 
 .displaced.colorblind {
-  background-color: #FFB000;
+  background-color: #D55E00;
 }
 
 .displaced:disabled {
@@ -61,6 +61,6 @@
 }
 
 .displaced.colorblind:disabled {
-  background-color: rgba(255, 176, 0, 0.65);
+  background-color: rgba(213, 94, 0, 0.65);
 }
 

@@ -26,7 +26,7 @@
 }
 
 .wrong.colorblind {
-  background-color: #DC267F;
+  background-color: #1d1d1d;
 }
 
 .right {
@@ -36,7 +36,8 @@
 }
 
 .right.colorblind {
-  background-color: #648FFF;
+  background-color: #2271B2;
+  border-radius: 1rem !important;
 }
 
 .displaced {
@@ -46,7 +47,10 @@
 }
 
 .displaced.colorblind {
-  background-color: #FFB000;
+  background-color: #D55E00;
+  border-radius: 1rem !important;
+  border-style: dashed;
+  border-width: 3px;
 }
 
 .wordlistError {

@@ -42,12 +42,12 @@ function HowToPlayScreen(props: HowToPlayScreenProps) {
 
         <hr/>
 
-        <p className="text-center">Se uma letra ficar {colorblind ? 'desta cor' : 'verde'}, ela está presente na palavra e na posição correta.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'redonda desta cor' : 'verde'}, ela está presente na palavra e na posição correta.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
           <GuessExample word='CERTO' exampleState='right' />
         </div>
 
-        <p className="text-center">Se uma letra ficar {colorblind ? 'desta cor' : 'amarela'}, ela está presente na palavra, mas na posição errada.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'pontilhada desta cor' : 'amarela'}, ela está presente na palavra, mas na posição errada.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
           <GuessExample word='QUASE' exampleState='displaced' />
         </div>
@@ -58,7 +58,8 @@ function HowToPlayScreen(props: HowToPlayScreenProps) {
         </div>
 
         <p className="text-center credits">
-          criado por <a href="https://gabtoschi.com" target="_blank" rel="noreferrer">Gabriel Toschi</a>, banco de palavras por <a href="https://pt-br.libreoffice.org/projetos/vero" target="_blank" rel="noreferrer">VERO</a><br/>
+          criado por <a href="https://gabtoschi.com" target="_blank" rel="noreferrer">Gabriel Toschi</a><br/>
+          banco de palavras por <a href="https://pt-br.libreoffice.org/projetos/vero" target="_blank" rel="noreferrer">VERO</a><br/>
           versão brasileira não-oficial do <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank" rel="noreferrer">Wordle</a><br/>
           powered by <a href="https://pt-br.reactjs.org/" target="_blank" rel="noreferrer">React</a>, <a href="https://getbootstrap.com/" target="_blank" rel="noreferrer">Bootstrap</a>, <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a><br/>
         </p>

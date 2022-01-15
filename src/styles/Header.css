@@ -15,7 +15,7 @@
 }
 
 .letter-green.colorblind {
-  color: #648FFF;
+  color: #2271B2;
 }
 
 .letter-red {
@@ -23,7 +23,7 @@
 }
 
 .letter-red.colorblind {
-  color: #DC267F;
+  color: #1d1d1d;
 }
 
 .letter-yellow {
@@ -31,5 +31,5 @@
 }
 
 .letter-yellow.colorblind {
-  color: #FFB000;
+  color: #D55E00;
 }

@@ -20,7 +20,7 @@ function KeyboardButton(props: KeyboardButtonProps) {
 
   if (isColorblindModeActive) className += ' colorblind';
 
-  let content: JSX.Element = <span>{props.label}</span>;
+  let content = <span>{props.label}</span>;
   if (props.icon) content = mapIcon[props.icon]();
 
   return (
