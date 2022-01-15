@@ -42,19 +42,19 @@ function HowToPlayScreen(props: HowToPlayScreenProps) {
 
         <hr/>
 
-        <p className="text-center">Se uma letra ficar {colorblind ? 'roxa' : 'verde'}, ela está presente na palavra e na posição correta.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'desta cor' : 'verde'}, ela está presente na palavra e na posição correta.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
-          <GuessExample word={colorblind ? 'GRENA' : 'VERDE'} exampleState='right' />
+          <GuessExample word='CERTO' exampleState='right' />
         </div>
 
-        <p className="text-center">Se uma letra ficar amarela, ela está presente na palavra, mas na posição errada.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'desta cor' : 'amarela'}, ela está presente na palavra, mas na posição errada.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
-          <GuessExample word='AUREO' exampleState='displaced' />
+          <GuessExample word='QUASE' exampleState='displaced' />
         </div>
 
-        <p className="text-center">Se uma letra ficar {colorblind ? 'cinza' : 'vermelha'}, ela NÃO está na palavra.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'desta cor' : 'vermelha'}, ela NÃO está na palavra.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
-          <GuessExample word={colorblind ? 'CINZA' : 'RUBRO'} exampleState='wrong' />
+          <GuessExample word='FALHA' exampleState='wrong' />
         </div>
 
         <p className="text-center credits">

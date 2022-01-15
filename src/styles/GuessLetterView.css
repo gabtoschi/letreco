@@ -26,7 +26,7 @@
 }
 
 .wrong.colorblind {
-  background-color: #585858;
+  background-color: #DC267F;
 }
 
 .right {
@@ -36,13 +36,17 @@
 }
 
 .right.colorblind {
-  background-color: #601A4A;
+  background-color: #648FFF;
 }
 
 .displaced {
   border: 1px solid #252525;
   background-color: #c79c2e;
   color: #f4f3f1 !important;
+}
+
+.displaced.colorblind {
+  background-color: #FFB000;
 }
 
 .wordlistError {
