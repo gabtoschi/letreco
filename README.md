@@ -1,46 +1,11 @@
-# Getting Started with Create React App
+![Letreco - um jogo diário de adivinhar palavras](public/splash.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Letreco - um jogo diário de adivinhar palavras
 
-## Available Scripts
+O [**Letreco**](https://gabtoschi.com/letreco) é um jogo web de adivinhação de palavras, criado como uma versão brasileira não-oficial do [Wordle](https://www.powerlanguage.co.uk/wordle/). Todos os dias, todos os jogadores que entram no site tem uma palavra de 5 letras para descobrir usando até 6 tentativas. Cada tentativa deve ser uma palavra válida e o jogo dá dicas a partir destes chutes, falando quais letras não estão na palavra ou se elas estão na posição correta na palavra.
 
-In the project directory, you can run:
+Ele foi criado não só para que existisse uma versão em português do joguinho do momento, mas também para que eu pudesse praticar e aprender React. Dado o sucesso do Letreco, novas funcionalidades estão sendo adicionadas aos poucos.
 
-### `npm start`
+O banco de dados de palavras é um recorte processado da lista usada pelo [VERO](https://pt-br.libreoffice.org/projetos/vero), o Verificador Ortográfico do LibreOffice para a língua portuguesa. Deixo aqui meus agradecimentos pela iniciativa e por ter quebrado aquele galho nesse projeto.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Atenção:** se você quer jogar diariamente o jogo, não olhe o conteúdo do arquivo `dailyword.utils.ts`. Nele estão contidas todas as "palavras do dia" para, pelo menos, daqui 3 meses de jogo. Se você já saber a palavra, não tem muita graça em jogar, não é?
