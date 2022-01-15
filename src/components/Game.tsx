@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { DailyWord, GameWinState, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates } from '../models';
-import { getDailyWord, wordList } from '../utils';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { DailyWord, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates, SavedDailyGame } from '../models';
+import { getDailyWord, getLast, getToday, wordList } from '../utils';
 import EndGameScreen from './EndGameScreen';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
@@ -14,41 +15,47 @@ export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 
 export const GAME_END_DELAY = 0.8 * 1000;
 
-function Game() {
-  const [guesses, setGuesses] = useState<GuessLetter[][]>([[]]);
+export const SAVED_GAME_KEY = 'savedGame';
+export const SAVED_GAME_INIT: SavedDailyGame = {
+  date: getToday(),
+  guesses: [[]],
+  winState: { isGameEnded: false, isGameWon: false },
+  letterStates: {},
+}
 
-  const [winState, setWinState] = useState<GameWinState>({
-    isGameEnded: false, isGameWon: false,
-  });
-  const [buttonStates, setButtonStates] = useState<KeyboardButtonStates>({
-    letters: true, back: false, enter: false,
-  });
-  const [letterStates, setLetterStates] = useState<KeyboardLetterStates>({});
+const updateKeyboardButtonStates = (guesses: GuessLetter[][]): KeyboardButtonStates => {
+  const lastGuess = getLast(guesses);
+
+  return {
+    letters: lastGuess.length < WORD_SIZE,
+    back: lastGuess.length > 0,
+    enter: lastGuess.length === WORD_SIZE,
+  }
+}
+
+function Game() {
+  const [{
+    date: savedDate, guesses, winState, letterStates,
+  }, setSavedGame] = useLocalStorage(SAVED_GAME_KEY, SAVED_GAME_INIT);
+
+  if (savedDate !== getToday()) {
+    setSavedGame(SAVED_GAME_INIT);
+  }
 
   const [isEndGameScreenOpen, setIsEndGameScreenOpen] = useState<boolean>(false);
 
   const dailyWord = useMemo<DailyWord>(() => getDailyWord(), []);
 
-  const getLastGuess = (guessesArray: GuessLetter[][] = guesses) => {
-    return guessesArray[guessesArray.length - 1];
-  }
+  const [buttonStates, setButtonStates] = useState<KeyboardButtonStates>(
+    updateKeyboardButtonStates(guesses)
+  );
 
   const updateLastGuess = (newGuess: GuessLetter[]): GuessLetter[][] => {
     return [...guesses.slice(0, guesses.length - 1), newGuess];
   }
 
-  const updateKeyboardButtonStates = (guesses: GuessLetter[][]): KeyboardButtonStates => {
-    const lastGuess = getLastGuess(guesses);
-
-    return {
-      letters: lastGuess.length < WORD_SIZE,
-      back: lastGuess.length > 0,
-      enter: lastGuess.length === WORD_SIZE,
-    }
-  }
-
   const isLastGuessInWordList = (): boolean => {
-    const lastGuessWord = getLastGuess()
+    const lastGuessWord = getLast(guesses)
       .map(guess => guess.letter)
       .join('');
 
@@ -65,7 +72,7 @@ function Game() {
   }
 
   const validateLastGuess = (): GuessValidationResult => {
-    const lastGuess = getLastGuess();
+    const lastGuess = getLast(guesses);
     const dailyWordLetters = dailyWord.word.split('');
 
     const missingLetters = [];
@@ -110,34 +117,33 @@ function Game() {
     };
   }
 
-
   const handleKeyboardLetter = (letter: string) => {
-    const updatedGuesses = updateLastGuess([...getLastGuess(), { letter, state: 'typing' }]);
+    const updatedGuesses = updateLastGuess([...getLast(guesses), { letter, state: 'typing' }]);
 
-    setGuesses(updatedGuesses);
+    setSavedGame({ guesses: updatedGuesses });
     setButtonStates(updateKeyboardButtonStates(updatedGuesses));
   }
 
   const handleKeyboardBack = () => {
-    const lastGuess = getLastGuess();
+    const lastGuess = getLast(guesses);
     const newGuess: GuessLetter[] = lastGuess
       .slice(0, lastGuess.length - 1)
       .map(oldGuess => ({ letter: oldGuess.letter, state: 'typing' }) as GuessLetter);
 
     const updatedGuesses = updateLastGuess(newGuess);
 
-    setGuesses(updatedGuesses);
+    setSavedGame({ guesses: updatedGuesses });
     setButtonStates(updateKeyboardButtonStates(updatedGuesses));
   }
 
   const handleKeyboardEnter = () => {
     if (!isLastGuessInWordList()) {
-      const newGuess = getLastGuess()
+      const newGuess = getLast(guesses)
         .map(guess => ({ letter: guess.letter, state: 'wordlistError' }) as GuessLetter);
 
       const updatedGuesses = updateLastGuess(newGuess);
 
-      setGuesses(updatedGuesses);
+      setSavedGame({ guesses: updatedGuesses });
       setButtonStates(updateKeyboardButtonStates(updatedGuesses));
 
       return;
@@ -148,21 +154,31 @@ function Game() {
     if (guesses.length === GUESS_LIST_SIZE || isRightGuess) {
       const updatedGuesses = updateLastGuess(validatedGuess);
 
-      setGuesses(updatedGuesses);
+      setSavedGame({
+        guesses: updatedGuesses,
+        letterStates: newLetterStates,
+      });
+
       setButtonStates(updateKeyboardButtonStates(updatedGuesses));
-      setLetterStates(newLetterStates);
 
       setTimeout(() => {
-        setWinState({ isGameEnded: true, isGameWon: isRightGuess });
+        setSavedGame({
+          guesses: updatedGuesses,
+          letterStates: newLetterStates,
+          winState: { isGameEnded: true, isGameWon: isRightGuess }
+        });
+
         setIsEndGameScreenOpen(true);
       }, GAME_END_DELAY);
 
     } else {
       const updatedGuesses = [...updateLastGuess(validatedGuess), []];
 
-      setGuesses(updatedGuesses);
+      setSavedGame({
+        guesses: updatedGuesses,
+        letterStates: newLetterStates,
+      });
       setButtonStates(updateKeyboardButtonStates(updatedGuesses));
-      setLetterStates(newLetterStates);
     }
   }
 

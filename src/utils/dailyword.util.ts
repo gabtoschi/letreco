@@ -2,18 +2,20 @@ import { DailyWord, DailyWordDatabase } from "../models";
 
 const MILISSECONDS_IN_A_MINUTE = 60 * 1000;
 
-export function getDailyWord(): DailyWord {
+export function getToday(): string {
   const todayDate = new Date();
   const correctedDate = new Date(
     todayDate.valueOf() - (todayDate.getTimezoneOffset() * MILISSECONDS_IN_A_MINUTE)
   );
 
-  const formattedDate = correctedDate.toISOString().split('T')[0];
-
-  return dailyWords[formattedDate];
+  return correctedDate.toISOString().split('T')[0];
 }
 
-export const dailyWords: DailyWordDatabase = {
+export function getDailyWord(): DailyWord {
+  return dailyWords[getToday()];
+}
+
+const dailyWords: DailyWordDatabase = {
   '2022-01-07': { edition: '001', date: '2022-01-07', word: 'MARCO' },
   '2022-01-08': { edition: '002', date: '2022-01-08', word: 'PROSA' },
   '2022-01-09': { edition: '003', date: '2022-01-09', word: 'TRENO' },

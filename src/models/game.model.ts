@@ -40,3 +40,10 @@ export interface EndGameScreenProps {
   guesses: GuessLetter[][];
   handleCloseScreen: () => void;
 }
+
+export interface SavedDailyGame {
+  date: string;
+  guesses: GuessLetter[][];
+  winState: GameWinState;
+  letterStates: KeyboardLetterStates;
+}
