@@ -189,6 +189,8 @@ function Game() {
   return (
     <div
       className='mt-3'
+      onClick={winState.isGameEnded && !isEndGameScreenOpen ? () => setIsEndGameScreenOpen(true): undefined}
+      style={{ cursor: winState.isGameEnded && !isEndGameScreenOpen ? 'pointer' : 'default' }}
     >
       {isEndGameScreenOpen && <EndGameScreen
         dailyWord={dailyWord}
