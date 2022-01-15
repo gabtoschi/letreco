@@ -3,7 +3,7 @@ import '../styles/SettingsScreen.css';
 import { SettingsScreenProps } from "../models";
 import Button from "./Button";
 import { useContext } from "react";
-import { GlobalSettingsContext, GlobalSettingsHook } from "../hooks/useGlobalSettings";
+import { GlobalSettingsContext } from "../hooks/useGlobalSettings";
 
 const SOCIAL_URLS = [
   { label: 'Twitter', url: 'https://twitter.com/meuletreco'},
@@ -16,7 +16,7 @@ function SettingsScreen({
 }: SettingsScreenProps) {
   const [{
     isColorblindModeActive,
-  }, setGlobalSettings] = useContext<GlobalSettingsHook>(GlobalSettingsContext);
+  }, setGlobalSettings] = useContext(GlobalSettingsContext);
 
   const handleUrlOpen = (url: string) => {
     window.open(url, '_blank');

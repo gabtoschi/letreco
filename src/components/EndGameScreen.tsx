@@ -1,11 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { EndGameScreenProps } from '../models';
 import Button from './Button';
 import Overlay from './Overlay';
 import '../styles/EndGameScreen.css';
 import { getNormalEndGameMessage } from '../utils';
+import { GlobalSettingsContext } from '../hooks/useGlobalSettings';
 
 function EndGameScreen(props: EndGameScreenProps) {
+  const [{isColorblindModeActive}] = useContext(GlobalSettingsContext);
+
   const [isResultCopied, setIsResultCopied] = useState<boolean>(false);
   const message = useMemo<string>(
     () => getNormalEndGameMessage(props.dailyWord.edition, props.guesses, props.isGameWon),
@@ -39,7 +42,11 @@ function EndGameScreen(props: EndGameScreenProps) {
     <Overlay content={
       <div>
         <h1
-          className={'text-center mb-3 ' + (props.isGameWon ? 'win-text' : 'lose-text')}
+          className={
+            'text-center mb-3 '
+            + (isColorblindModeActive ? 'colorblind ': '')
+            + (props.isGameWon ? 'win-text' : 'lose-text')
+          }
         >Você {props.isGameWon ? 'acertou!' : 'não conseguiu...'}</h1>
         <p className='text-center mb-1'>o Letreco do dia era: <b>{props.dailyWord.word}</b></p>
         <p className='text-center mb-3'>você usou <b>{props.guesses.length} de 6</b> tentativas</p>

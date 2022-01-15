@@ -58,3 +58,7 @@
   background-color: #f4f3f1;
   color: #252525;
 }
+
+.wordlistError.colorblind {
+  border: 3px solid #D55E00;
+}

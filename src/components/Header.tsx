@@ -4,12 +4,12 @@ import HowToPlayScreen from './HowToPlayScreen';
 import { shuffleArray } from '../utils';
 import { useContext, useState } from 'react';
 import SettingsScreen from './SettingsScreen';
-import { GlobalSettingsContext, GlobalSettingsHook } from '../hooks/useGlobalSettings';
+import { GlobalSettingsContext } from '../hooks/useGlobalSettings';
 
 const APP_NAME = 'LETRECO';
 
 function Header() {
-  const [{isColorblindModeActive}] = useContext<GlobalSettingsHook>(GlobalSettingsContext);
+  const [{isColorblindModeActive}] = useContext(GlobalSettingsContext);
 
   const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);

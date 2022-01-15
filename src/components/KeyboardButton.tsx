@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { BsCheckLg, BsFillBackspaceFill } from "react-icons/bs";
-import { GlobalSettingsContext, GlobalSettingsHook } from "../hooks/useGlobalSettings";
+import { GlobalSettingsContext } from "../hooks/useGlobalSettings";
 import { KeyboardButtonProps } from "../models";
 import '../styles/KeyboardButton.css';
 
@@ -10,7 +10,7 @@ const mapIcon: { [icon: string]: () => JSX.Element } = {
 };
 
 function KeyboardButton(props: KeyboardButtonProps) {
-  const [{isColorblindModeActive}] = useContext<GlobalSettingsHook>(GlobalSettingsContext);
+  const [{isColorblindModeActive}] = useContext(GlobalSettingsContext);
 
   let className = 'keyboard-button rounded';
   if (props.extraClasses) className += ' ' + props.extraClasses;

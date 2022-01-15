@@ -6,7 +6,7 @@ import Button from "./Button";
 import { getRandomInt } from "../utils";
 import { GuessLetterState } from "../models";
 import { useContext } from "react";
-import { GlobalSettingsContext, GlobalSettingsHook } from "../hooks/useGlobalSettings";
+import { GlobalSettingsContext } from "../hooks/useGlobalSettings";
 
 function GuessExample(props: {word: string, exampleState: GuessLetterState}) {
   const randomExample = getRandomInt(0, 5);
@@ -26,7 +26,7 @@ function GuessExample(props: {word: string, exampleState: GuessLetterState}) {
 }
 
 function HowToPlayScreen(props: HowToPlayScreenProps) {
-  const [{isColorblindModeActive: colorblind}] = useContext<GlobalSettingsHook>(GlobalSettingsContext);
+  const [{isColorblindModeActive: colorblind}] = useContext(GlobalSettingsContext);
 
   return (
     <Overlay content={
