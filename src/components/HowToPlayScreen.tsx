@@ -37,17 +37,17 @@ function HowToPlayScreen(props: HowToPlayScreenProps) {
           Todos os dias, uma nova palavra aparecerá no Letreco para você adivinhar.<br/>
           Você terá 6 tentativas. Cada uma delas deve ser uma palavra que exista.<br/>
           Acentos e cedilha são ignorados, tanto nas tentativas, quanto na resposta.<br/>
-          Após enviar uma tentativa, a cor das letras mudará para indicar o quão perto você está da resposta.
+          Após chutar, as letras mudarão para indicar o quão perto você está da resposta.
         </p>
 
         <hr/>
 
-        <p className="text-center">Se uma letra ficar {colorblind ? 'redonda desta cor' : 'verde'}, ela está presente na palavra e na posição correta.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'redonda' : 'verde'}, ela está presente na palavra e na posição correta.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
           <GuessExample word='CERTO' exampleState='right' />
         </div>
 
-        <p className="text-center">Se uma letra ficar {colorblind ? 'pontilhada desta cor' : 'amarela'}, ela está presente na palavra, mas na posição errada.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'pontilhada' : 'amarela'}, ela está presente na palavra, mas na posição errada.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
           <GuessExample word='QUASE' exampleState='displaced' />
         </div>

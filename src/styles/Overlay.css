@@ -14,7 +14,23 @@
   z-index: 2;
 }
 
+.overlay-wrapper {
+  width: 100%;
+}
+
 .overlay {
   background-color: #f4f3f1;
   border: 1px solid #252525;
+}
+
+@media (min-width: 992px) {
+  .overlay {
+    width: 63%;
+  }
+
+  .overlay-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
