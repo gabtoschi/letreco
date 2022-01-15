@@ -25,10 +25,18 @@
   color: #f4f3f1;
 }
 
+.wrong.colorblind {
+  background-color: #585858;
+}
+
 .right {
   border: 1px solid #252525;
   background-color: #51b36e;
   color: #f4f3f1;
+}
+
+.right.colorblind {
+  background-color: #601A4A;
 }
 
 .displaced {

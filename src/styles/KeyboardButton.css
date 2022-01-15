@@ -18,8 +18,16 @@
   color: #f4f3f1;
 }
 
+.right.colorblind {
+  background-color: #601a4a;
+}
+
 .right:disabled {
   background-color: rgba(81, 179, 110, 0.65);
+}
+
+.right.colorblind:disabled {
+  background-color: rgba(96, 26, 74, 0.65);
 }
 
 .wrong {
@@ -27,8 +35,16 @@
   color: #f4f3f1;
 }
 
+.wrong.colorblind {
+  background-color: #585858;
+}
+
 .wrong:disabled {
   background-color: rgba(148, 62, 60, 0.65);
+}
+
+.wrong.colorblind:disabled {
+  background-color: rgba(88, 88, 88, 0.65);
 }
 
 .displaced {

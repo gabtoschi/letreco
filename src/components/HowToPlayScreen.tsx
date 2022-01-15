@@ -3,8 +3,31 @@ import GuessLetterView from "./GuessLetterView";
 import Overlay from "./Overlay";
 import '../styles/HowToPlayScreen.css';
 import Button from "./Button";
+import { getRandomInt } from "../utils";
+import { GuessLetterState } from "../models";
+import { useContext } from "react";
+import { GlobalSettingsContext, GlobalSettingsHook } from "../hooks/useGlobalSettings";
+
+function GuessExample(props: {word: string, exampleState: GuessLetterState}) {
+  const randomExample = getRandomInt(0, 5);
+
+  return <div className="d-flex">
+    {
+      props.word.split('').map((letter, index) => (
+        <GuessLetterView
+          key={letter + '-' + props.exampleState + index.toString()}
+          letter={letter}
+          state={index === randomExample ? props.exampleState : 'disabled'}
+          marginRight={index !== 4}
+        ></GuessLetterView>
+      ))
+    }
+  </div>
+}
 
 function HowToPlayScreen(props: HowToPlayScreenProps) {
+  const [{isColorblindModeActive: colorblind}] = useContext<GlobalSettingsHook>(GlobalSettingsContext);
+
   return (
     <Overlay content={
       <div className="content">
@@ -19,37 +42,19 @@ function HowToPlayScreen(props: HowToPlayScreenProps) {
 
         <hr/>
 
-        <p className="text-center">Se uma letra ficar verde, ela está presente na palavra e na posição correta.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'roxa' : 'verde'}, ela está presente na palavra e na posição correta.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
-          <div className="d-flex">
-            <GuessLetterView letter="V" state="right" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="E" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="R" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="D" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="E" state="disabled"></GuessLetterView>
-          </div>
+          <GuessExample word={colorblind ? 'GRENA' : 'VERDE'} exampleState='right' />
         </div>
 
         <p className="text-center">Se uma letra ficar amarela, ela está presente na palavra, mas na posição errada.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
-          <div className="d-flex">
-            <GuessLetterView letter="A" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="U" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="R" state="displaced" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="E" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="O" state="disabled"></GuessLetterView>
-          </div>
+          <GuessExample word='AUREO' exampleState='displaced' />
         </div>
 
-        <p className="text-center">Se uma letra ficar vermelha, ela NÃO está na palavra.</p>
+        <p className="text-center">Se uma letra ficar {colorblind ? 'cinza' : 'vermelha'}, ela NÃO está na palavra.</p>
         <div className="d-flex justify-content-center align-items-center mb-4">
-          <div className="d-flex">
-            <GuessLetterView letter="R" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="U" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="B" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="R" state="disabled" marginRight={true}></GuessLetterView>
-            <GuessLetterView letter="O" state="wrong"></GuessLetterView>
-          </div>
+          <GuessExample word={colorblind ? 'CINZA' : 'RUBRO'} exampleState='wrong' />
         </div>
 
         <p className="text-center credits">
