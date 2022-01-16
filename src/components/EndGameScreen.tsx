@@ -3,12 +3,15 @@ import { EndGameScreenProps } from '../models';
 import Button from './Button';
 import Overlay from './Overlay';
 import '../styles/EndGameScreen.css';
-import { getNormalEndGameMessage } from '../utils';
+import { getNormalEndGameMessage, getTodayTrophies } from '../utils';
 import { GlobalSettingsContext } from '../hooks/useGlobalSettings';
 import { StatisticsView } from './StatisticsView';
+import { SavedTrophiesContext } from '../hooks/useTrophies';
+import { BsFillTrophyFill } from 'react-icons/bs';
 
 function EndGameScreen(props: EndGameScreenProps) {
   const [{isColorblindModeActive}] = useContext(GlobalSettingsContext);
+  const [{unlockedTrophies}] = useContext(SavedTrophiesContext);
 
   const [isResultCopied, setIsResultCopied] = useState<boolean>(false);
   const message = useMemo<string>(
@@ -29,15 +32,12 @@ function EndGameScreen(props: EndGameScreenProps) {
     navigator.share({ text: message });
   }
 
-  const shareButton = canShare()
-    ? (
-      <Button
-        className='mb-2'
-        onClick={() => handleShareButton()}
-        label='COMPARTILHAR'
-      />
-    )
-    : '';
+  const todayTrophiesEmojis = getTodayTrophies(unlockedTrophies)
+    .map(trophy => trophy.emoji);
+
+  const trophiesString = todayTrophiesEmojis.join(' ');
+  const trophiesLabel = todayTrophiesEmojis.length > 1 ? 'novos troféus secretos!' : 'novo troféu secreto!';
+  const showTrophies = !!todayTrophiesEmojis.length;
 
   return (
     <Overlay content={
@@ -53,9 +53,18 @@ function EndGameScreen(props: EndGameScreenProps) {
             >Você {props.isGameWon ? 'acertou!' : 'não conseguiu...'}</h1>
             <p className='text-center mb-1'>o Letreco do dia era: <b>{props.dailyWord.word}</b></p>
             <p className='text-center mb-3'>você usou <b>{props.guesses.length} de 6</b> tentativas</p>
+            {showTrophies && <div>
+              <p className='text-center mb-1'>{trophiesLabel} (veja no menu <BsFillTrophyFill />)</p>
+              <h4 className='text-center mb-3'>{ trophiesString }</h4>
+            </div>}
+
 
             <div className="d-flex flex-column justify-content-center align-items-center">
-              {shareButton}
+              {canShare() && <Button
+                className='mb-2'
+                onClick={() => handleShareButton()}
+                label='COMPARTILHAR'
+              />}
 
               <Button
                 className='mb-2'

@@ -1,3 +1,4 @@
+import { getGuessesWords, getToday } from '.';
 import { Statistics } from './../hooks/useStatistics';
 import { GuessLetter, DailyWord } from './../models/game.model';
 
@@ -53,6 +54,26 @@ export const allTrophies: Trophy[] = [
       return isGameWon && guesses.length === 3;
     }
   },
+  {
+    id: 'tutorialWords',
+    name: 'ÓTIMO ALUNO',
+    description: 'Chute todas as palavras de exemplo do tutorial.',
+    emoji: '📚',
+    validator: ({guesses}) => {
+      const words = getGuessesWords(guesses);
+      return words.includes('CERTO') && words.includes('QUASE') && words.includes('FALHA');
+    }
+  },
+  {
+    id: 'letrecoWords',
+    name: 'NOSSO JEITO',
+    description: 'Use "letra" e "treco" como chutes. Obrigado pela homenagem!',
+    emoji: '🕹',
+    validator: ({guesses}) => {
+      const words = getGuessesWords(guesses);
+      return words.includes('LETRA') && words.includes('TRECO');
+    }
+  },
 ];
 
 export const allTrophiesById: TrophyMap = allTrophies.reduce<TrophyMap>(
@@ -78,4 +99,11 @@ export function unlockNewTrophies(
       date: dailyWord.date,
       edition: dailyWord.edition,
     }));
+}
+
+export function getTodayTrophies(unlocked: UnlockedTrophy[]): Trophy[] {
+  return unlocked
+    .filter(trophy => trophy.date === getToday())
+    .map(trophy => trophy.trophyId)
+    .map(trophyId => allTrophiesById[trophyId]);
 }
