@@ -41,7 +41,7 @@ function EndGameScreen(props: EndGameScreenProps) {
 
   return (
     <Overlay content={
-      <div className='row'>
+      <div className='content row'>
         <div className='col-12 col-md-6 d-flex justify-content-center align-items-center'>
           <div>
             <h1
