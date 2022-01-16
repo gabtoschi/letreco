@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/letreco/static/css/main.e1cf8279.css",
-    "main.js": "/letreco/static/js/main.199032e1.js",
+    "main.js": "/letreco/static/js/main.0445c5f9.js",
     "index.html": "/letreco/index.html"
   },
   "entrypoints": [
     "static/css/main.e1cf8279.css",
-    "static/js/main.199032e1.js"
+    "static/js/main.0445c5f9.js"
   ]
 }
