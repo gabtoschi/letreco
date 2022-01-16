@@ -1,6 +1,6 @@
 import Overlay from "./Overlay";
 import '../styles/SettingsScreen.css';
-import { SettingsScreenProps } from "../models";
+import { OverlayScreenProps } from "../models";
 import Button from "./Button";
 import { useContext } from "react";
 import { GlobalSettingsContext } from "../hooks/useGlobalSettings";
@@ -13,7 +13,7 @@ const SOCIAL_URLS = [
 
 function SettingsScreen({
   handleCloseScreen,
-}: SettingsScreenProps) {
+}: OverlayScreenProps) {
   const [{
     isColorblindModeActive,
   }, setGlobalSettings] = useContext(GlobalSettingsContext);
@@ -54,11 +54,11 @@ function SettingsScreen({
       <hr/>
 
       <div className="d-flex align-items-center justify-content-center">
-          <Button
-            onClick={handleCloseScreen}
-            label='FECHAR'
-          />
-        </div>
+        <Button
+          onClick={handleCloseScreen}
+          label='FECHAR'
+        />
+      </div>
     </div>
   } />
 }

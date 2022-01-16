@@ -1,7 +1,3 @@
-export interface HowToPlayScreenProps {
-  handleCloseScreen: () => void;
-}
-
-export interface SettingsScreenProps {
+export interface OverlayScreenProps {
   handleCloseScreen: () => void;
 }

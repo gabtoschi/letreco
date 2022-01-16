@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { GuessDistributionKeys, StatisticsContext } from '../hooks/useStatistics';
 import { DailyWord, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates, SavedDailyGame } from '../models';
 import { getDailyWord, getLast, getToday, wordList } from '../utils';
 import EndGameScreen from './EndGameScreen';
@@ -34,6 +35,8 @@ const updateKeyboardButtonStates = (guesses: GuessLetter[][]): KeyboardButtonSta
 }
 
 function Game() {
+  const [statistics, setStatistics] = useContext(StatisticsContext);
+
   const [{
     date: savedDate, guesses, winState, letterStates,
   }, setSavedGame] = useLocalStorage(SAVED_GAME_KEY, SAVED_GAME_INIT);
@@ -49,6 +52,22 @@ function Game() {
   const [buttonStates, setButtonStates] = useState<KeyboardButtonStates>(
     updateKeyboardButtonStates(guesses)
   );
+
+  const updateStatistics = (isGameWon: boolean, guessesAmount: number) => {
+    const newStreak = isGameWon ? statistics.currentStreak + 1 : 0;
+    console.log(newStreak);
+
+    const guessResult = (isGameWon ? guessesAmount.toString() : 'X') as GuessDistributionKeys;
+
+    const newDistribution = { ...statistics.distribution };
+    newDistribution[guessResult] += 1;
+
+    setStatistics({
+      distribution: newDistribution,
+      currentStreak: newStreak,
+      maxStreak: newStreak > statistics.maxStreak ? newStreak : statistics.maxStreak,
+    });
+  }
 
   const updateLastGuess = (newGuess: GuessLetter[]): GuessLetter[][] => {
     return [...guesses.slice(0, guesses.length - 1), newGuess];
@@ -168,6 +187,7 @@ function Game() {
           winState: { isGameEnded: true, isGameWon: isRightGuess }
         });
 
+        updateStatistics(isRightGuess, updatedGuesses.length);
         setIsEndGameScreenOpen(true);
       }, GAME_END_DELAY);
 

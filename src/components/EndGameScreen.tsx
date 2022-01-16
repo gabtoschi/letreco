@@ -5,6 +5,7 @@ import Overlay from './Overlay';
 import '../styles/EndGameScreen.css';
 import { getNormalEndGameMessage } from '../utils';
 import { GlobalSettingsContext } from '../hooks/useGlobalSettings';
+import { StatisticsView } from './StatisticsView';
 
 function EndGameScreen(props: EndGameScreenProps) {
   const [{isColorblindModeActive}] = useContext(GlobalSettingsContext);
@@ -40,30 +41,38 @@ function EndGameScreen(props: EndGameScreenProps) {
 
   return (
     <Overlay content={
-      <div>
-        <h1
-          className={
-            'text-center mb-3 '
-            + (isColorblindModeActive ? 'colorblind ': '')
-            + (props.isGameWon ? 'win-text' : 'lose-text')
-          }
-        >Você {props.isGameWon ? 'acertou!' : 'não conseguiu...'}</h1>
-        <p className='text-center mb-1'>o Letreco do dia era: <b>{props.dailyWord.word}</b></p>
-        <p className='text-center mb-3'>você usou <b>{props.guesses.length} de 6</b> tentativas</p>
+      <div className='row'>
+        <div className='col-12 col-md-6 d-flex justify-content-center align-items-center'>
+          <div>
+            <h1
+              className={
+                'text-center mb-3 '
+                + (isColorblindModeActive ? 'colorblind ': '')
+                + (props.isGameWon ? 'win-text' : 'lose-text')
+              }
+            >Você {props.isGameWon ? 'acertou!' : 'não conseguiu...'}</h1>
+            <p className='text-center mb-1'>o Letreco do dia era: <b>{props.dailyWord.word}</b></p>
+            <p className='text-center mb-3'>você usou <b>{props.guesses.length} de 6</b> tentativas</p>
 
-        <div className="d-flex flex-column justify-content-center align-items-center">
-          {shareButton}
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              {shareButton}
 
-          <Button
-            className='mb-2'
-            onClick={() => handleCopyButton()}
-            label={isResultCopied ? 'COPIADO' : 'COPIAR RESULTADO'}
-          />
+              <Button
+                className='mb-2'
+                onClick={() => handleCopyButton()}
+                label={isResultCopied ? 'COPIADO' : 'COPIAR RESULTADO'}
+              />
 
-          <Button
-            onClick={() => props.handleCloseScreen()}
-            label='FECHAR'
-          />
+              <Button
+                onClick={() => props.handleCloseScreen()}
+                label='FECHAR'
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className='col-12 col-md-6 mt-4 mt-md-0'>
+          <StatisticsView />
         </div>
       </div>
     }/>

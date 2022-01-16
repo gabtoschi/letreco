@@ -1,10 +1,9 @@
-import { HowToPlayScreenProps } from "../models/header.model";
 import GuessLetterView from "./GuessLetterView";
 import Overlay from "./Overlay";
 import '../styles/HowToPlayScreen.css';
 import Button from "./Button";
 import { getRandomInt } from "../utils";
-import { GuessLetterState } from "../models";
+import { GuessLetterState, OverlayScreenProps } from "../models";
 import { useContext } from "react";
 import { GlobalSettingsContext } from "../hooks/useGlobalSettings";
 
@@ -25,7 +24,7 @@ function GuessExample(props: {word: string, exampleState: GuessLetterState}) {
   </div>
 }
 
-function HowToPlayScreen(props: HowToPlayScreenProps) {
+function HowToPlayScreen(props: OverlayScreenProps) {
   const [{isColorblindModeActive: colorblind}] = useContext(GlobalSettingsContext);
 
   return (

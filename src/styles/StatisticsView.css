@@ -1,0 +1,13 @@
+.data-label {
+  line-height: 1.25rem;
+}
+
+.graph-bar {
+  background-color: #51b36e;
+  color: #f4f3f1;
+  font-weight: bolder;
+}
+
+.graph-bar.colorblind {
+  background-color: #2271B2;
+}
