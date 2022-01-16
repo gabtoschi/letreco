@@ -137,6 +137,8 @@ function Game() {
   }
 
   const handleKeyboardLetter = (letter: string) => {
+    if (winState.isGameEnded) return;
+
     const updatedGuesses = updateLastGuess([...getLast(guesses), { letter, state: 'typing' }]);
 
     setSavedGame({ guesses: updatedGuesses });
@@ -144,6 +146,8 @@ function Game() {
   }
 
   const handleKeyboardBack = () => {
+    if (winState.isGameEnded) return;
+
     const lastGuess = getLast(guesses);
     const newGuess: GuessLetter[] = lastGuess
       .slice(0, lastGuess.length - 1)
@@ -156,6 +160,8 @@ function Game() {
   }
 
   const handleKeyboardEnter = () => {
+    if (winState.isGameEnded) return;
+
     if (!isLastGuessInWordList()) {
       const newGuess = getLast(guesses)
         .map(guess => ({ letter: guess.letter, state: 'wordlistError' }) as GuessLetter);
