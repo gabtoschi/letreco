@@ -1,6 +1,6 @@
 .content {
   max-height: 78vh;
-  overflow: overlay;
+  overflow: auto;
 }
 
 .credits {
