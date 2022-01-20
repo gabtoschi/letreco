@@ -7,5 +7,3 @@ O [**Letreco**](https://gabtoschi.com/letreco) é um jogo web de adivinhação d
 Ele foi criado não só para que existisse uma versão em português do joguinho do momento, mas também para que eu pudesse praticar e aprender React. Dado o sucesso do Letreco, novas funcionalidades estão sendo adicionadas aos poucos.
 
 O banco de dados de palavras é um recorte processado da lista usada pelo [VERO](https://pt-br.libreoffice.org/projetos/vero), o Verificador Ortográfico do LibreOffice para a língua portuguesa. Deixo aqui meus agradecimentos pela iniciativa e por ter quebrado aquele galho nesse projeto.
-
-**Atenção:** se você quer jogar diariamente o jogo, não olhe o conteúdo do arquivo `dailyword.utils.ts`. Nele estão contidas todas as "palavras do dia" para, pelo menos, daqui 3 meses de jogo. Se você já saber a palavra, não tem muita graça em jogar, não é?
