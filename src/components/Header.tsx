@@ -1,19 +1,20 @@
 import '../styles/Header.css';
-import { BsFillBarChartLineFill, BsFillGearFill, BsQuestionLg, BsTwitter } from "react-icons/bs"
+import { BsFillBarChartLineFill, BsFillGearFill, BsFillTrophyFill, BsQuestionLg } from "react-icons/bs"
 import HowToPlayScreen from './HowToPlayScreen';
 import { shuffleArray } from '../utils';
 import { useContext, useState } from 'react';
 import SettingsScreen from './SettingsScreen';
 import { GlobalSettingsContext } from '../hooks/useGlobalSettings';
 import { StatisticsScreen } from './StatisticsScreen';
+import { TrophiesScreen } from './TrophiesScreen';
 
 const APP_NAME = 'LETRECO';
-const TWITTER_URL = 'https://twitter.com/meuletreco';
 
 function Header() {
   const [{isColorblindModeActive}] = useContext(GlobalSettingsContext);
 
   const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
+  const [isTrophiesOpen, setIsTrophiesOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isStatisticsOpen, setIsStatisticsOpen] = useState(false);
 
@@ -35,6 +36,12 @@ function Header() {
       {isHowToPlayOpen &&
         <HowToPlayScreen
           handleCloseScreen={() => setIsHowToPlayOpen(false)}
+        />
+      }
+
+      {isTrophiesOpen &&
+        <TrophiesScreen
+          handleCloseScreen={() => setIsTrophiesOpen(false)}
         />
       }
 
@@ -60,9 +67,9 @@ function Header() {
 
         <button
           className='header-button rounded d-flex align-items-center justify-content-center py-2'
-          onClick={() => window.open(TWITTER_URL, '_blank')}
+          onClick={() => setIsTrophiesOpen(true)}
         >
-          <BsTwitter />
+          <BsFillTrophyFill />
         </button>
       </div>
 

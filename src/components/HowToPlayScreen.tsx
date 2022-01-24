@@ -30,7 +30,7 @@ function HowToPlayScreen(props: OverlayScreenProps) {
   return (
     <Overlay content={
       <div className="content">
-        <h1 className="text-center">COMO JOGAR</h1>
+        <h3 className="text-center">como jogar</h3>
 
         <p className="text-center">
           Todos os dias, uma nova palavra aparecerá no Letreco para você adivinhar.<br/>
