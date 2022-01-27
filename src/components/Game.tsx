@@ -24,8 +24,14 @@ export const SAVED_GAME_INIT: SavedDailyGame = {
   letterStates: {},
 }
 
+const BUTTON_STATES_INIT: KeyboardButtonStates = {
+  letters: true,
+  back: false,
+  enter: false,
+}
+
 const updateKeyboardButtonStates = (guesses: GuessLetter[][]): KeyboardButtonStates => {
-  const lastGuess = getLast(guesses);
+  const lastGuess = getLast(guesses || [[]]);
 
   return {
     letters: lastGuess.length < WORD_SIZE,
@@ -41,7 +47,12 @@ function Game() {
     date: savedDate, guesses, winState, letterStates,
   }, setSavedGame] = useLocalStorage(SAVED_GAME_KEY, SAVED_GAME_INIT);
 
+  const [buttonStates, setButtonStates] = useState<KeyboardButtonStates>(
+    updateKeyboardButtonStates(guesses)
+  );
+
   if (savedDate !== getToday()) {
+    setButtonStates(BUTTON_STATES_INIT);
     setSavedGame(SAVED_GAME_INIT);
   }
 
@@ -49,9 +60,6 @@ function Game() {
 
   const dailyWord = useMemo<DailyWord>(() => getDailyWord(), []);
 
-  const [buttonStates, setButtonStates] = useState<KeyboardButtonStates>(
-    updateKeyboardButtonStates(guesses)
-  );
 
   const updateStatistics = (isGameWon: boolean, guessesAmount: number) => {
     const newStreak = isGameWon ? statistics.currentStreak + 1 : 0;
