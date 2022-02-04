@@ -18424,4 +18424,8 @@ export const wordList: string[] = [
  'ZURZE',
  'ZURZI',
  'ZURZO',
+ 'ABATE',
+ 'ATIRO',
+ 'ATRAS',
+ 'ATIRE',
 ];
