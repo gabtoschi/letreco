@@ -1,10 +1,18 @@
 .letter-wrapper {
+  position: relative;
   border: 2px solid #252525;
   width: 48px;
   height: 40px;
 
   font-size: 20px;
   font-weight: bolder;
+}
+
+.letter-wrapper i {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  font-style: normal;
 }
 
 .typing {

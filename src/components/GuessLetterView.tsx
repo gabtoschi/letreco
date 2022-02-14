@@ -13,6 +13,7 @@ function GuessLetterView(props: GuessLetterViewProps) {
 
   return (
     <div className={className}>
+      {props.plusSign && <i>+</i>}
       {props.letter}
     </div>
   );

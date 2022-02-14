@@ -100,6 +100,7 @@ function Game() {
 
   const validateLastGuess = (): GuessValidationResult => {
     const lastGuess = getLast(guesses);
+
     const dailyWordLetters = dailyWord.word.split('');
 
     const missingLetters = [];
@@ -112,9 +113,12 @@ function Game() {
     for (let i = 0; i < WORD_SIZE; i++) {
       const letterState = lastGuess[i].letter === dailyWordLetters[i] ? 'right' : 'wrong';
 
+      const letterOcurrences = (dailyWord.word.match(new RegExp(lastGuess[i].letter, 'g')) || []).length
+
       validatedGuess.push({
         letter: lastGuess[i].letter,
         state: letterState,
+        multipleOcurrences: (letterOcurrences > 1)
       });
 
       if (letterState === 'wrong') missingLetters.push(dailyWordLetters[i]);
