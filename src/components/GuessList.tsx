@@ -29,6 +29,7 @@ function GuessList(props: GuessListProps) {
               letter={letter.letter}
               state={letter.state}
               marginRight={letterIndex !== guess.length - 1}
+              plusSign={letter.multipleOcurrences}
             />
           ))}
         </div>

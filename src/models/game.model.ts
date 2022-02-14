@@ -11,6 +11,7 @@ export type GuessLetterState =
 export interface GuessLetter {
   letter: string;
   state: GuessLetterState;
+  multipleOcurrences?: boolean;
 }
 
 export interface DailyWord {
