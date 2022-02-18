@@ -18428,4 +18428,6 @@ export const wordList: string[] = [
  'ATIRO',
  'ATRAS',
  'ATIRE',
+ 'AULAS',
+ 'BILAU',
 ];

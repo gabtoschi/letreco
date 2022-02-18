@@ -59,7 +59,7 @@ export const dailyWords: DailyWordDatabase = {
   '2022-02-16': { edition: '041', date: '2022-02-16', word: 'RUNAS' },
   '2022-02-17': { edition: '042', date: '2022-02-17', word: 'LISTA' },
   '2022-02-18': { edition: '043', date: '2022-02-18', word: 'MENOR' },
-  '2022-02-19': { edition: '044', date: '2022-02-19', word: 'FUMOS' },
+  '2022-02-19': { edition: '044', date: '2022-02-19', word: 'HOTEL' },
   '2022-02-20': { edition: '045', date: '2022-02-20', word: 'PAIOL' },
   '2022-02-21': { edition: '046', date: '2022-02-21', word: 'IGUAL' },
   '2022-02-22': { edition: '047', date: '2022-02-22', word: 'TREMA' },
