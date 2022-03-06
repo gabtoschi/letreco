@@ -75,7 +75,7 @@ export const dailyWords: DailyWordDatabase = {
   '2022-03-04': { edition: '057', date: '2022-03-04', word: 'LINDA' },
   '2022-03-05': { edition: '058', date: '2022-03-05', word: 'PAVIO' },
   '2022-03-06': { edition: '059', date: '2022-03-06', word: 'LEAIS' },
-  '2022-03-07': { edition: '060', date: '2022-03-07', word: 'PALMO' },
+  '2022-03-07': { edition: '060', date: '2022-03-07', word: 'MOVEL' },
   '2022-03-08': { edition: '061', date: '2022-03-08', word: 'LOUSA' },
   '2022-03-09': { edition: '062', date: '2022-03-09', word: 'ZINCO' },
   '2022-03-10': { edition: '063', date: '2022-03-10', word: 'VELHO' },
