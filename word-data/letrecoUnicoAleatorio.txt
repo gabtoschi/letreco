@@ -770,7 +770,7 @@ DUTRA
 SOFIA
 ARIFE
 NERIA
-FUMOS ==============================
+FUMOS
 CORAM
 ZELIO
 PTERO
@@ -4445,7 +4445,7 @@ ATRIZ
 CERIA
 OLIVA
 CEBOS
-SABER
+SABER ==============================
 NELAS
 DOXUS
 ITAUS
