@@ -252,6 +252,7 @@ function Game() {
         dailyWord={dailyWord}
         guesses={guesses}
         isGameWon={winState.isGameWon}
+        currentStrike={statistics.currentStreak}
         handleCloseScreen={handleEndGameScreenClose}
       />}
 

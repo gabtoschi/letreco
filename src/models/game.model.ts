@@ -38,6 +38,7 @@ export interface EndGameScreenProps {
   dailyWord: DailyWord;
   isGameWon: boolean;
   guesses: GuessLetter[][];
+  currentStrike: number;
   handleCloseScreen: () => void;
 }
 

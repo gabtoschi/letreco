@@ -12,8 +12,8 @@ function EndGameScreen(props: EndGameScreenProps) {
 
   const [isResultCopied, setIsResultCopied] = useState<boolean>(false);
   const message = useMemo<string>(
-    () => getNormalEndGameMessage(props.dailyWord.edition, props.guesses, props.isGameWon),
-    [props.dailyWord.edition, props.guesses, props.isGameWon],
+    () => getNormalEndGameMessage(props.dailyWord.edition, props.guesses, props.isGameWon, props.currentStrike),
+    [props.dailyWord.edition, props.guesses, props.isGameWon, props.currentStrike],
   );
 
   const canShare = (): boolean => {
