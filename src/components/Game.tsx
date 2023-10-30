@@ -1,22 +1,15 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { GuessDistributionKeys, StatisticsContext } from '../hooks/useStatistics';
+import { useUnderlinePosition } from '../hooks/useUnderlinePosition';
 import { DailyWord, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates, SavedDailyGame } from '../models';
+import { WORD_SIZE, SAVED_GAME_KEY, GUESS_LIST_SIZE, GAME_END_DELAY } from '../shared/GameConstants';
+import { KEY_RIGHT, KEY_LEFT, KEY_BACKSPACE, KEY_ENTER, KEY_LETTERS } from '../shared/KeyboardConstants';
 import { getDailyWord, getLast, getToday, wordList } from '../utils';
 import EndGameScreen from './EndGameScreen';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
 
-export const WORD_SIZE = 5;
-export const GUESS_LIST_SIZE = 6;
-
-export const KEY_BACKSPACE = 'Backspace';
-export const KEY_ENTER = 'Enter';
-export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
-
-export const GAME_END_DELAY = 0.8 * 1000;
-
-export const SAVED_GAME_KEY = 'savedGame';
 export const SAVED_GAME_INIT: SavedDailyGame = {
   date: getToday(),
   guesses: [[]],
@@ -32,16 +25,30 @@ const BUTTON_STATES_INIT: KeyboardButtonStates = {
 
 const updateKeyboardButtonStates = (guesses: GuessLetter[][]): KeyboardButtonStates => {
   const lastGuess = getLast(guesses || [[]]);
+  const arrayIsEmpty = lastGuess.some(isGuessLetterEmpty);
 
   return {
-    letters: lastGuess.length < WORD_SIZE,
+    letters: lastGuess.length < WORD_SIZE || arrayIsEmpty,
     back: lastGuess.length > 0,
     enter: lastGuess.length === WORD_SIZE,
   }
 }
 
+const isGuessLetterEmpty = (guessLetter : GuessLetter) : boolean => {
+  if(!guessLetter) return true;
+  if(Object.keys(guessLetter).length === 0) return true;
+
+  return false;
+}
+
 function Game() {
   const [statistics, setStatistics] = useContext(StatisticsContext);
+  const {
+    underlinePosition,
+    updateUnderlinePosition,
+    backspaceUnderlinePosition,
+    setSpecificUnderlinePosition
+  } = useUnderlinePosition();
 
   const [{
     date: savedDate, guesses, winState, letterStates,
@@ -146,8 +153,12 @@ function Game() {
 
   const handleKeyboardLetter = (letter: string) => {
     if (winState.isGameEnded) return;
+    const last = [...getLast(guesses)];
+    last[underlinePosition] =  { letter, state: 'typing' };
 
-    const updatedGuesses = updateLastGuess([...getLast(guesses), { letter, state: 'typing' }]);
+    updateUnderlinePosition(true);
+
+    const updatedGuesses = updateLastGuess(last);
 
     setSavedGame({ guesses: updatedGuesses });
     setButtonStates(updateKeyboardButtonStates(updatedGuesses));
@@ -155,13 +166,14 @@ function Game() {
 
   const handleKeyboardBack = () => {
     if (winState.isGameEnded) return;
+    if(underlinePosition > WORD_SIZE) return;
 
     const lastGuess = getLast(guesses);
-    const newGuess: GuessLetter[] = lastGuess
-      .slice(0, lastGuess.length - 1)
-      .map(oldGuess => ({ letter: oldGuess.letter, state: 'typing' }) as GuessLetter);
+    lastGuess[underlinePosition] = {} as GuessLetter;
 
-    const updatedGuesses = updateLastGuess(newGuess);
+    backspaceUnderlinePosition();
+
+    const updatedGuesses = updateLastGuess(lastGuess);
 
     setSavedGame({ guesses: updatedGuesses });
     setButtonStates(updateKeyboardButtonStates(updatedGuesses));
@@ -213,10 +225,23 @@ function Game() {
         letterStates: newLetterStates,
       });
       setButtonStates(updateKeyboardButtonStates(updatedGuesses));
+      setSpecificUnderlinePosition(0);
     }
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === KEY_RIGHT)
+    {
+      updateUnderlinePosition(true);
+      return;
+    }
+
+    if (event.key === KEY_LEFT)
+    {
+      updateUnderlinePosition(false);
+      return;
+    }
+
     if (event.key === KEY_BACKSPACE && buttonStates.back) {
       handleKeyboardBack();
       return;
