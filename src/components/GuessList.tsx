@@ -1,6 +1,6 @@
 import { GuessLetter, GuessListProps } from "../models";
+import { GUESS_LIST_SIZE, WORD_SIZE } from "../shared/GameConstants";
 import { completeArray } from "../utils";
-import { GUESS_LIST_SIZE, WORD_SIZE } from "./Game";
 import GuessLetterView from "./GuessLetterView";
 
 const completeList = (guesses: GuessLetter[][]) => {
@@ -25,9 +25,10 @@ function GuessList(props: GuessListProps) {
         >
           {guess.map((letter, letterIndex) => (
             <GuessLetterView
+              index={letterIndex}
               key={guessIndex + '-' + letterIndex}
-              letter={letter.letter}
-              state={letter.state}
+              letter={letter?.letter}
+              state={letter?.state}
               marginRight={letterIndex !== guess.length - 1}
             />
           ))}
