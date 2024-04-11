@@ -12,7 +12,7 @@ export const GUESS_LIST_SIZE = 6;
 
 export const KEY_BACKSPACE = 'Backspace';
 export const KEY_ENTER = 'Enter';
-export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
+export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export const GAME_END_DELAY = 0.8 * 1000;
 
