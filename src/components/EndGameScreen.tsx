@@ -39,6 +39,8 @@ function EndGameScreen(props: EndGameScreenProps) {
     )
     : '';
 
+  const pixLink = 'https://nubank.com.br/cobrar/vmu98/6616a68b-1d60-4aea-9543-43e90b9da733'
+
   return (
     <Overlay content={
       <div className='content row'>
@@ -67,6 +69,8 @@ function EndGameScreen(props: EndGameScreenProps) {
                 onClick={() => props.handleCloseScreen()}
                 label='FECHAR'
               />
+
+              <p className='text-center mt-3'>Gostou do jogo? <a target="_blank" rel="noreferrer" href={pixLink}><b>Apoie com um Pix</b></a> esse e outros projetos meus!</p>
             </div>
           </div>
         </div>
