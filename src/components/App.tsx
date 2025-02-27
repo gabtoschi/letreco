@@ -26,7 +26,7 @@ function App() {
           >
             <img
               className="w-100 mb-2"
-              src="letreco/piquinim.png"
+              src="/letreco/piquinim.png"
               alt="Conheça a Coleção Piquinim, jogos de tabuleiro que cabem no bolso!"
             />
           </a>
