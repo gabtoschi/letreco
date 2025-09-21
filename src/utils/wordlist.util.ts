@@ -18430,4 +18430,5 @@ export const wordList: string[] = [
  'ATIRE',
  'AULAS',
  'BILAU',
+ 'REAJO'
 ];
