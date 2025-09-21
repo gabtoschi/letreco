@@ -1383,7 +1383,7 @@ export const dailyWords: DailyWordDatabase = {
   '2025-10-01': { edition: '1364', date: '2025-10-01', word: 'UNIDO' },
   '2025-10-02': { edition: '1365', date: '2025-10-02', word: 'DUCHA' },
   '2025-10-03': { edition: '1366', date: '2025-10-03', word: 'BOIAS' },
-  '2025-10-04': { edition: '1367', date: '2025-10-04', word: 'MIJAR' },
+  '2025-10-04': { edition: '1367', date: '2025-10-04', word: 'UREIA' },
   '2025-10-05': { edition: '1368', date: '2025-10-05', word: 'GERAL' },
   '2025-10-06': { edition: '1369', date: '2025-10-06', word: 'MUNDO' },
   '2025-10-07': { edition: '1370', date: '2025-10-07', word: 'SUBIR' },
