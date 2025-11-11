@@ -2,3 +2,7 @@
   max-height: 78vh;
   overflow: auto;
 }
+
+.closeButton {
+  margin-top: 1vh;
+}
