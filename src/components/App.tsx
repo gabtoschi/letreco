@@ -20,7 +20,7 @@ function App() {
 
           <a
             className="mt-5 w-100 d-flex justify-content-center align-items-center"
-            href="https://catarse.me/piquinim2"
+            href="https://meeplestarter.com.br/piquinim3"
             target="_blank"
             rel="noreferrer"
           >
