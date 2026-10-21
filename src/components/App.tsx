@@ -20,14 +20,14 @@ function App() {
 
           <a
             className="mt-5 w-100 d-flex justify-content-center align-items-center"
-            href="https://meeplestarter.com.br/piquinim3"
+            href="https://www.catarse.com.br/jardim-dos-rabiscos"
             target="_blank"
             rel="noreferrer"
           >
             <img
               className="w-100 mb-2"
               src="/letreco/piquinim.png"
-              alt="Conheça a Coleção Piquinim, jogos de tabuleiro que cabem no bolso!"
+              alt="Jardim dos Rabiscos é um jogo rápido de Rolar e Escrever com tema nostálgico que remete a cuidar de um jardim no quintal de casa."
             />
           </a>
         </div>
